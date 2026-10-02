@@ -1,0 +1,76 @@
+
+========================================================================================
+             FORM FOR REQUISITION OF BANK ACCOUNT FREEZE / LIEN
+           UNDER SECTION 91 Cr.P.C. / SECTION 94 BHARATIYA NAGARIK SURAKSHA SANHITA (BNSS)
+========================================================================================
+
+[DRAFT FOR AUTHORIZED POLICE / LAW ENFORCEMENT OFFICER REVIEW]
+
+Date: 02/10/2026
+Ref / Investigation ID: TXN-INV-C5FCD508
+
+TO:
+The Nodal Officer / Fraud Risk Management Team,
+Concerned Banking Institutions & Payment Aggregators.
+
+SUBJECT: 
+URGENT: Requisition for debit freeze / marking of lien on beneficiary money mule accounts
+under Section 91 Cr.P.C. / Section 94 BNSS in connection with cyber fraud investigation.
+
+Sir / Madam,
+
+1. WHEREAS an investigation has been registered regarding cyber fraud originating from 
+   complainant / focal account: KKBK10000000.
+
+2. AND WHEREAS digital forensics analysis reveals that defrauded funds totaling ₹455,541.61 
+   were moved through multi-layered mule networks to the following target beneficiary accounts:
+
+
+| 1 | `ICIC10000335` | `LAYER_1_COLLECTOR` | ₹455,541.61 | 52.0/100 | Direct recipient of Rs. 455,541.61 in focal transaction TXN4... |
+| 2 | `ICIC10001095` | `LAYER_3_TERMINAL` | ₹81,480.25 | 37.0/100 | 96.0% funds dispersed within median 12.7 mins.; Operating fr... |
+| 3 | `PYTM10000639` | `LAYER_3_TERMINAL` | ₹185,205.36 | 37.0/100 | 96.0% funds dispersed within median 24.6 mins.; Operating fr... |
+| 4 | `HDFC10000815` | `LAYER_3_TERMINAL` | ₹88,737.26 | 37.0/100 | 96.0% funds dispersed within median 24.0 mins.; Operating fr... |
+| 5 | `PYTM10000679` | `LAYER_3_TERMINAL` | ₹21,910.87 | 37.0/100 | 96.0% funds dispersed within median 14.0 mins.; Operating fr... |
+| 6 | `AXIS10000585` | `LAYER_3_TERMINAL` | ₹69,097.04 | 37.0/100 | 96.0% funds dispersed within median 20.3 mins.; Operating fr... |
+| 7 | `SBIN10000971` | `LAYER_3_TERMINAL` | ₹41,700.85 | 37.0/100 | 96.0% funds dispersed within median 15.1 mins.; Operating fr... |
+| 8 | `PUNB10000508` | `LAYER_3_TERMINAL` | ₹46,557.48 | 37.0/100 | 96.0% funds dispersed within median 15.1 mins.; Operating fr... |
+| 9 | `KKBK10000734` | `LAYER_3_TERMINAL` | ₹52,824.86 | 37.0/100 | 96.0% funds dispersed within median 24.2 mins.; Operating fr... |
+| 10 | `SBIN10000774` | `LAYER_3_TERMINAL` | ₹15,052.48 | 37.0/100 | 96.0% funds dispersed within median 19.7 mins.; Operating fr... |
+| 11 | `PYTM10000952` | `LAYER_3_TERMINAL` | ₹37,866.90 | 37.0/100 | 96.0% funds dispersed within median 14.8 mins.; Operating fr... |
+| 12 | `HDFC10001048` | `LAYER_3_TERMINAL` | ₹50,516.34 | 37.0/100 | 96.0% funds dispersed within median 14.4 mins.; Operating fr... |
+| 13 | `ICIC10001309` | `LAYER_3_TERMINAL` | ₹78,221.04 | 27.0/100 | Aggregated funds from 5 distinct senders.; Operating from au... |
+| 14 | `KKBK10001330` | `LAYER_3_TERMINAL` | ₹177,797.14 | 27.0/100 | Aggregated funds from 4 distinct senders.; Operating from au... |
+| 15 | `BARB10001377` | `LAYER_3_TERMINAL` | ₹85,187.77 | 27.0/100 | Aggregated funds from 5 distinct senders.; Operating from au... |
+| 16 | `BARB10001269` | `LAYER_3_TERMINAL` | ₹166,911.18 | 27.0/100 | Aggregated funds from 4 distinct senders.; Operating from au... |
+| 17 | `AIRP10001372` | `LAYER_3_TERMINAL` | ₹21,034.44 | 27.0/100 | Aggregated funds from 5 distinct senders.; Operating from au... |
+| 18 | `IPOS10001227` | `LAYER_3_TERMINAL` | ₹281,686.03 | 27.0/100 | Aggregated funds from 3 distinct senders.; Operating from au... |
+| 19 | `AIRP10001422` | `LAYER_3_TERMINAL` | ₹66,333.16 | 27.0/100 | Aggregated funds from 6 distinct senders.; Operating from au... |
+| 20 | `ICIC10001316` | `LAYER_3_TERMINAL` | ₹257,470.06 | 27.0/100 | Aggregated funds from 4 distinct senders.; Operating from au... |
+| 21 | `AIRP10001257` | `LAYER_3_TERMINAL` | ₹40,032.81 | 27.0/100 | Aggregated funds from 6 distinct senders.; Operating from au... |
+| 22 | `HDFC10001292` | `LAYER_3_TERMINAL` | ₹27,053.92 | 27.0/100 | Aggregated funds from 6 distinct senders.; Operating from au... |
+| 23 | `KKBK10001356` | `LAYER_3_TERMINAL` | ₹10,128.34 | 27.0/100 | Aggregated funds from 7 distinct senders.; Operating from au... |
+| 24 | `IPOS10001205` | `LAYER_3_TERMINAL` | ₹71,538.08 | 27.0/100 | Aggregated funds from 9 distinct senders.; Operating from au... |
+| 25 | `AXIS10001378` | `LAYER_3_TERMINAL` | ₹128,780.68 | 27.0/100 | Aggregated funds from 6 distinct senders.; Operating from au... |
+| 26 | `BARB10001287` | `LAYER_3_TERMINAL` | ₹171,774.49 | 27.0/100 | Aggregated funds from 3 distinct senders.; Operating from au... |
+| 27 | `ICIC10001361` | `LAYER_3_TERMINAL` | ₹14,450.38 | 27.0/100 | Aggregated funds from 3 distinct senders.; Operating from au... |
+| 28 | `KKBK10001495` | `LAYER_3_TERMINAL` | ₹36,352.23 | 27.0/100 | Aggregated funds from 5 distinct senders.; Operating from au... |
+| 29 | `BARB10001121` | `LAYER_3_TERMINAL` | ₹21,899.13 | 27.0/100 | Aggregated funds from 5 distinct senders.; Operating from au... |
+| 30 | `PUNB10001374` | `LAYER_3_TERMINAL` | ₹48,495.68 | 27.0/100 | Aggregated funds from 6 distinct senders.; Operating from au... |
+| 31 | `BARB10001142` | `LAYER_3_TERMINAL` | ₹44,695.18 | 12.0/100 | Operating from automation/emulator device: Linux_Script; Det... |
+| 32 | `SBIN10001280` | `LAYER_3_TERMINAL` | ₹50,711.87 | 12.0/100 | Operating from automation/emulator device: Linux_Script; Det... |
+| 33 | `SBIN10001459` | `LAYER_3_TERMINAL` | ₹75,257.92 | 12.0/100 | Operating from automation/emulator device: Linux_Script; Det... |
+| 34 | `HDFC10001105` | `LAYER_3_TERMINAL` | ₹99,710.28 | 12.0/100 | Operating from automation/emulator device: Linux_Script; Det... |
+
+3. THEREFORE, in exercise of powers conferred under Section 91 of the Code of Criminal Procedure / 
+   Section 94 of the Bharatiya Nagarik Suraksha Sanhita (BNSS), you are hereby requested to:
+   
+   (a) IMMEDIATELY effect a Debit Freeze / Lien Mark on the accounts listed above for the disputed amounts.
+   (b) Furnish KYC documents, Account Opening Forms (AOF), registered Mobile numbers, and 
+       IP login logs for the suspect accounts within 24 hours of receipt of this notice.
+   (c) Reverse / credit the illicit funds back to the originating complainant account under 
+       standard SOP guidelines upon magistrate approval.
+
+Issued by:
+Officer Test,
+Cyber Crime Police Station.
+========================================================================================

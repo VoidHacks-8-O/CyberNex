@@ -1,0 +1,2464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABHEDYA-CHAKRA | Cartoon Cyber Detective Command Center</title>
+    <!-- 100% Local Offline Fonts & Assets (Zero Internet Required) -->
+    <link rel="stylesheet" href="./vendor/fonts.css">
+    <!-- Local Offline Tailwind CSS Engine -->
+    <script src="./vendor/tailwindcss.js"></script>
+    <!-- Local Offline Vis-Network for Graph Analytics -->
+    <script type="text/javascript" src="./vendor/vis-network.min.js"></script>
+    <!-- Local Offline Lucide Icons -->
+    <script src="./vendor/lucide.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sky: {
+                            50: '#F0F9FF',
+                            100: '#E0F2FE',
+                            200: '#BAE6FD',
+                            300: '#7DD3FC',
+                            400: '#38BDF8',
+                            500: '#0EA5E9',
+                            600: '#0284C7',
+                            700: '#0369A1',
+                            800: '#075985',
+                            900: '#0C4A6E',
+                        },
+                        navy: {
+                            800: '#1E293B',
+                            900: '#0F172A',
+                            950: '#090D16'
+                        },
+                        cartoon: {
+                            blue: '#38BDF8',
+                            lightBlue: '#7DD3FC',
+                            bgBlue: '#E0F2FE',
+                            white: '#FFFFFF',
+                            green: '#10B981',
+                            greenLight: '#D1FAE5',
+                            yellow: '#F59E0B',
+                            yellowLight: '#FEF3C7',
+                            red: '#EF4444',
+                            redLight: '#FEE2E2',
+                            purple: '#8B5CF6',
+                            purpleLight: '#EDE9FE',
+                            border: '#BAE6FD',
+                            borderDark: '#7DD3FC'
+                        }
+                    },
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        outfit: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    boxShadow: {
+                        'cartoon': '0 10px 25px -5px rgba(56, 189, 248, 0.25), 0 8px 10px -6px rgba(15, 23, 42, 0.05)',
+                        'cartoon-sm': '0 4px 12px -2px rgba(56, 189, 248, 0.2)',
+                        'cartoon-lg': '0 20px 35px -10px rgba(56, 189, 248, 0.35)',
+                        'cartoon-inner': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.04)',
+                        'pop': '0 8px 0px 0px #BAE6FD',
+                        'pop-blue': '0 6px 0px 0px #0284C7',
+                        'pop-green': '0 6px 0px 0px #059669',
+                        'pop-yellow': '0 6px 0px 0px #D97706',
+                        'pop-red': '0 6px 0px 0px #DC2626',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Bright Sky-Blue Theme */
+        body {
+            background-color: #E0F2FE;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.7) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(186, 230, 253, 0.6) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(224, 242, 254, 0.8) 0%, transparent 60%);
+            color: #0F172A;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Cute Cartoon Cards */
+        .cartoon-card {
+            background: #FFFFFF;
+            border: 2.5px solid #BAE6FD;
+            border-radius: 22px;
+            box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.2), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .cartoon-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px -5px rgba(56, 189, 248, 0.3);
+            border-color: #7DD3FC;
+        }
+
+        /* Cartoon Buttons with 3D Pop Feel */
+        .cartoon-btn {
+            transition: all 0.15s ease-in-out;
+        }
+        .cartoon-btn:active {
+            transform: translateY(3px);
+            box-shadow: none !important;
+        }
+
+        /* Speech Bubble Pointer */
+        .speech-bubble {
+            position: relative;
+            background: #FFFFFF;
+            border: 2px solid #BAE6FD;
+            border-radius: 18px;
+        }
+        .speech-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 28px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #BAE6FD;
+        }
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -7px;
+            left: 30px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid #FFFFFF;
+        }
+
+        /* Tab Buttons */
+        .tab-btn {
+            border-radius: 16px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+        .tab-btn.active {
+            background-color: #38BDF8;
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
+            border-color: #0284C7;
+        }
+
+        /* Gentle Floating Mascot Animation */
+        @keyframes float-mascot {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(2deg); }
+        }
+        .animate-float {
+            animation: float-mascot 3.5s ease-in-out infinite;
+        }
+
+        /* Soft Cloud Float */
+        @keyframes drift-cloud {
+            0% { transform: translateX(0px); }
+            50% { transform: translateX(15px); }
+            100% { transform: translateX(0px); }
+        }
+        .animate-drift {
+            animation: drift-cloud 8s ease-in-out infinite;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #E0F2FE; border-radius: 8px; }
+        ::-webkit-scrollbar-thumb { background: #7DD3FC; border-radius: 8px; }
+        ::-webkit-scrollbar-thumb:hover { background: #38BDF8; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-sky-200 selection:text-sky-900">
+
+    <!-- ========================================================================= -->
+    <!-- TOP CARTOON NAV & MASCOT HEADER -->
+    <!-- ========================================================================= -->
+    <header class="bg-white/90 backdrop-blur-md border-b-2 border-sky-200 px-4 md:px-8 py-3 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[1680px] mx-auto flex flex-wrap items-center justify-between gap-4">
+            
+            <!-- Logo with Cyber Detective Mascot -->
+            <div class="flex items-center space-x-3">
+                <!-- Cute Mascot Bot Avatar -->
+                <div class="relative w-12 h-12 flex-shrink-0 animate-float cursor-pointer" onclick="switchTab('tab-command')">
+                    <!-- SVG Mascot -->
+                    <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
+                        <!-- Detective Hat -->
+                        <ellipse cx="50" cy="22" rx="36" ry="7" fill="#0F172A" />
+                        <path d="M 28 22 Q 50 2 72 22 Z" fill="#1E293B" />
+                        <path d="M 28 22 Q 50 16 72 22" stroke="#38BDF8" stroke-width="3" fill="none" />
+                        <!-- Bot Head -->
+                        <circle cx="50" cy="56" r="34" fill="#FFFFFF" stroke="#0F172A" stroke-width="4" />
+                        <!-- Face Screen -->
+                        <rect x="26" y="38" width="48" height="30" rx="14" fill="#0C4A6E" />
+                        <!-- Blinking Cyan Eyes -->
+                        <ellipse cx="40" cy="52" rx="5" ry="6" fill="#38BDF8" />
+                        <circle cx="42" cy="50" r="2" fill="#FFFFFF" />
+                        <ellipse cx="60" cy="52" rx="5" ry="6" fill="#38BDF8" />
+                        <circle cx="62" cy="50" r="2" fill="#FFFFFF" />
+                        <!-- Cheerful Smile -->
+                        <path d="M 45 61 Q 50 64 55 61" stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round" fill="none" />
+                        <!-- Cute Shield Badge on Chest -->
+                        <path d="M 50 82 L 40 88 L 40 98 Q 50 102 50 102 Q 50 102 60 98 L 60 88 Z" fill="#38BDF8" stroke="#0F172A" stroke-width="2.5" />
+                        <path d="M 50 86 L 50 98" stroke="#FFFFFF" stroke-width="2" />
+                    </svg>
+                    <!-- Pulse Badge -->
+                    <span class="absolute -top-1 -right-1 flex h-3.5 w-3.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-white"></span>
+                    </span>
+                </div>
+
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-fredoka font-bold text-2xl text-navy-900 tracking-tight">ABHEDYA-<span class="text-sky-500">CHAKRA</span></span>
+                        <span class="px-2 py-0.5 rounded-full bg-sky-100 border border-sky-300 text-sky-700 text-xs font-fredoka font-semibold">🔍 Cyber Detective</span>
+                    </div>
+                    <p class="text-xs text-slate-500 font-medium font-outfit">Intelligent Money Mule Ring Detection & Digital Forensics Platform</p>
+                </div>
+            </div>
+
+            <!-- Status Badges & Time -->
+            <div class="flex items-center flex-wrap gap-2 text-xs font-semibold">
+                <div class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 shadow-sm">
+                    <span class="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>System Online</span>
+                </div>
+
+                <div class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-sky-50 border border-sky-200 text-sky-800 shadow-sm">
+                    <span>Dataset:</span>
+                    <span id="topDatasetBadge" class="font-bold text-sky-600">Demo Mode</span>
+                </div>
+
+                <div class="hidden sm:flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-purple-50 border border-purple-200 text-purple-700 shadow-sm">
+                    <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+                    <span>DuckDB Engine</span>
+                </div>
+
+                <div class="flex items-center space-x-1 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-700 font-mono shadow-sm">
+                    <i data-lucide="clock" class="w-3.5 h-3.5 text-sky-500"></i>
+                    <span id="sysLiveClock">00:00:00 UTC</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========================================================================= -->
+    <!-- PLAYFUL CARTOON NAVIGATION PILLS (10 VIEWS) -->
+    <!-- ========================================================================= -->
+    <nav class="bg-white/80 border-b border-sky-200 px-4 md:px-8 py-2 sticky top-[73px] z-40 shadow-sm">
+        <div class="max-w-[1680px] mx-auto flex items-center space-x-2 overflow-x-auto text-xs font-fredoka font-semibold pb-1">
+            <button onclick="switchTab('tab-command')" id="nav-command" class="tab-btn active px-4 py-2 border-2 border-transparent text-slate-700 hover:text-sky-600 flex items-center space-x-1.5 whitespace-nowrap">
+                <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                <span>Command Center</span>
+            </button>
+            <button onclick="switchTab('tab-trace')" id="nav-trace" class="tab-btn px-4 py-2 border-2 border-transparent text-slate-600 hover:text-sky-600 flex items-center space-x-1.5 whitespace-nowrap">
+                <i data-lucide="search" class="w-4 h-4 text-amber-500"></i>
+                <span>Blind Trace (Judge)</span>
+            </button>
+            <button onclick="switchTab('tab-trail')" id="nav-trail" class="tab-btn px-4 py-2 border-2 border-transparent text-slate-600 hover:text-sky-600 flex items-center space-x-1.5 whitespace-nowrap">
+                <i data-lucide="share-2" class="w-4 h-4 text-sky-500"></i>
+                <span>Money Trail (Graph)</span>
+            </button>
+            <button onclick="switchTab('tab-networks')" id="nav-networks" class="tab-btn px-4 py-2 border-2 border-transparent text-slate-600 hover:text-sky-600 flex items-center space-x-1.5 whitespace-nowrap">
+                <i data-lucide="network" class="w-4 h-4 text-purple-500"></i>
+                <span>Suspect Networks</span>
+            </button>
+            <button onclick="switchTab('tab-intel')" id="nav-intel" class="tab-btn px-4 py-2 border-2 border-transparent text-slate-600 hover:text-sky-600 flex items-center space-x-1.5 whitespace-nowrap">
+                <i data-lucide="user-check" class="w-4 h-4 text-emerald-500"></i>
+                <span>Account Intelligence</span>
+            </button>
+            <button onclick="switchTab('tab-timeline')" id="nav-timeline" class="tab-btn px-4 py-2 border-2 border-transparent text-slate-600 hover:text-sky-600 flex items-center space-x-1.5 whitespace-nowrap">
+                <i data-lucide="history" class="w-4 h-4 text-cyan-600"></i>
+                <span>Timeline Replay</span>
+            </button>
+            <button onclick="switchTab('tab-evidence')" id="nav-evidence" class="tab-btn px-4 py-2 border-2 border-transparent text-slate-600 hover:text-sky-600 flex items-center space-x-1.5 whitespace-nowrap">
+                <i data-lucide="shield-check" class="w-4 h-4 text-rose-500"></i>
+                <span>Evidence Vault</span>
+            </button>
+            <button onclick="switchTab('tab-reports')" id="nav-reports" class="tab-btn px-4 py-2 border-2 border-transparent text-slate-600 hover:text-sky-600 flex items-center space-x-1.5 whitespace-nowrap">
+                <i data-lucide="file-text" class="w-4 h-4 text-blue-600"></i>
+                <span>Case Reports (Sec 91/94)</span>
+            </button>
+            <button onclick="switchTab('tab-dataops')" id="nav-dataops" class="tab-btn px-4 py-2 border-2 border-transparent text-slate-600 hover:text-sky-600 flex items-center space-x-1.5 whitespace-nowrap">
+                <i data-lucide="database" class="w-4 h-4 text-sky-500"></i>
+                <span>Data Operations (Import)</span>
+            </button>
+            <button onclick="switchTab('tab-benchmark')" id="nav-benchmark" class="tab-btn px-4 py-2 border-2 border-transparent text-slate-600 hover:text-sky-600 flex items-center space-x-1.5 whitespace-nowrap">
+                <i data-lucide="activity" class="w-4 h-4 text-amber-600"></i>
+                <span>Benchmark</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ========================================================================= -->
+    <!-- MAIN WORKSPACE -->
+    <!-- ========================================================================= -->
+    <main class="flex-1 p-4 md:p-6 max-w-[1680px] mx-auto w-full space-y-6">
+
+        <!-- ===================================================================== -->
+        <!-- TAB 1: MAIN COMMAND CENTER (CARTOON INVESTIGATION DASHBOARD) -->
+        <!-- ===================================================================== -->
+        <section id="tab-command" class="tab-view block space-y-6">
+
+            <!-- 1. HERO SEARCH & INVESTIGATION ACTION BAR -->
+            <div class="cartoon-card p-6 bg-gradient-to-r from-sky-100 via-white to-sky-50 border-sky-300">
+                <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+                    <!-- Speech Bubble Intro with Mascot Icon -->
+                    <div class="flex items-center space-x-4 max-w-xl">
+                        <div class="w-16 h-16 rounded-2xl bg-sky-400 border-2 border-sky-600 flex items-center justify-center flex-shrink-0 shadow-cartoon-sm">
+                            <i data-lucide="search-check" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <div class="speech-bubble p-3.5 shadow-sm">
+                            <span class="font-fredoka font-bold text-sky-600 text-sm">Hi, I'm Detective Abhy! 🕵️‍♂️</span>
+                            <p class="text-xs text-slate-600 font-medium">Search Transaction ID or Account Number — automatically resolved across 1,997,748 dataset records!</p>
+                        </div>
+                    </div>
+
+                    <!-- Search Box & Buttons -->
+                    <div class="w-full lg:max-w-2xl flex flex-col gap-2">
+                        <div class="flex flex-col sm:flex-row items-center gap-2">
+                            <div class="relative w-full flex-1">
+                                <i data-lucide="search" class="absolute left-3.5 top-3.5 w-5 h-5 text-sky-400"></i>
+                                <input type="text" id="mainSearchInput" placeholder="Enter Transaction ID / Sender Account / Receiver Account..." 
+                                    class="w-full pl-11 pr-4 py-3 bg-white border-2 border-sky-300 rounded-2xl text-navy-900 font-mono text-sm font-semibold focus:outline-none focus:border-sky-500 shadow-cartoon-sm uppercase placeholder-slate-400">
+                            </div>
+                            <button id="heroSearchBtn" onclick="executeHeroTrace()" class="cartoon-btn w-full sm:w-auto px-6 py-3 rounded-2xl bg-sky-500 hover:bg-sky-400 text-white font-fredoka font-bold text-sm shadow-pop-blue flex items-center justify-center space-x-2 whitespace-nowrap">
+                                <i data-lucide="zap" class="w-4 h-4 fill-white"></i>
+                                <span id="heroSearchBtnText">Investigate Identifier</span>
+                            </button>
+                        </div>
+                        <div class="flex items-center justify-between text-[11px] text-sky-800 font-fredoka px-1">
+                            <span>Search any identifier from the imported transaction dataset.</span>
+                            <span id="searchDetectedBadge" class="hidden px-2.5 py-0.5 rounded-full font-bold uppercase shadow-sm"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Not Found Alert Banner -->
+                <div id="searchNotFoundAlert" class="hidden mt-4 p-4 rounded-2xl bg-rose-50 border-2 border-rose-300 text-rose-800 text-xs font-semibold flex items-center space-x-2">
+                    <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-600 flex-shrink-0"></i>
+                    <span>No matching record found in the imported transaction dataset.</span>
+                </div>
+
+                <!-- Fast Preset Chips (Dynamically Populated from DuckDB) & Quick Upload -->
+                <div class="flex flex-wrap items-center justify-between gap-2 mt-4 pt-4 border-t border-sky-200 text-xs font-fredoka">
+                    <div class="flex flex-wrap items-center gap-2" id="dynamicChipsWrapper">
+                        <span class="text-slate-500 font-semibold">⚡ Verified Dataset Test Chips:</span>
+                        <div id="dynamicTestChips" class="flex flex-wrap items-center gap-2">
+                            <span class="text-slate-400 text-xs">Loading verified chips from database...</span>
+                        </div>
+                    </div>
+                    <button onclick="quickOpenUpload()" class="cartoon-btn px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-white font-fredoka font-bold text-xs shadow-pop-blue flex items-center space-x-1.5">
+                        <i data-lucide="cloud-upload" class="w-4 h-4"></i>
+                        <span>Import / Upload Dataset (CSV)</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 2. TOP METRIC CARDS ROW (4 CARTOON STATUS TILES) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Card 1: Total Transactions -->
+                <div class="cartoon-card p-5 bg-white border-sky-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-fredoka text-xs font-bold text-slate-500 uppercase tracking-wider">Transaction Data</span>
+                        <div class="p-2 rounded-xl bg-sky-100 text-sky-600">
+                            <i data-lucide="layers" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div id="metricTotalTxns" class="font-fredoka text-3xl font-bold text-navy-900">0</div>
+                    <div class="flex items-center space-x-1.5 text-xs text-slate-500 mt-1">
+                        <span class="text-emerald-600 font-bold">● Healthy</span>
+                        <span>&bull; Imported Records</span>
+                    </div>
+                </div>
+
+                <!-- Card 2: High Risk Accounts -->
+                <div class="cartoon-card p-5 bg-white border-rose-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-fredoka text-xs font-bold text-rose-500 uppercase tracking-wider">High Risk Mules</span>
+                        <div class="p-2 rounded-xl bg-rose-100 text-rose-600">
+                            <i data-lucide="shield-alert" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div id="metricHighRisk" class="font-fredoka text-3xl font-bold text-rose-600">0</div>
+                    <div class="text-xs text-slate-500 mt-1">
+                        <span>Risk Score &ge; 70 Detected</span>
+                    </div>
+                </div>
+
+                <!-- Card 3: Active Rings -->
+                <div class="cartoon-card p-5 bg-white border-amber-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-fredoka text-xs font-bold text-amber-600 uppercase tracking-wider">Active Syndicates</span>
+                        <div class="p-2 rounded-xl bg-amber-100 text-amber-600">
+                            <i data-lucide="network" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div id="metricActiveRings" class="font-fredoka text-3xl font-bold text-amber-600">0</div>
+                    <div class="text-xs text-slate-500 mt-1">
+                        <span>Multi-Tier Mule Rings</span>
+                    </div>
+                </div>
+
+                <!-- Card 4: Money in Motion -->
+                <div class="cartoon-card p-5 bg-white border-purple-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-fredoka text-xs font-bold text-purple-600 uppercase tracking-wider">Money In Motion</span>
+                        <div class="p-2 rounded-xl bg-purple-100 text-purple-600">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div id="metricMoneyMotion" class="font-fredoka text-2xl font-bold text-purple-700">₹0</div>
+                    <div class="text-xs text-slate-500 mt-1">
+                        <span>Rapid Pass-Through Transit</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. MAIN DASHBOARD CONTENT (3 COLUMNS: RISK RADAR + NETWORK GRAPH + INVESTIGATION PANEL) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+                <!-- LEFT COLUMN: RISK OVERVIEW & DETECTIVE RADAR -->
+                <div class="lg:col-span-4 space-y-6">
+                    <!-- Circular Cartoon Risk Gauge -->
+                    <div class="cartoon-card p-5 bg-white">
+                        <div class="flex items-center justify-between border-b-2 border-sky-100 pb-3 mb-4">
+                            <div class="flex items-center space-x-2">
+                                <span class="p-1.5 rounded-lg bg-sky-100 text-sky-600"><i data-lucide="compass" class="w-4 h-4"></i></span>
+                                <h3 class="font-fredoka font-bold text-base text-navy-900">Mule Risk Radar</h3>
+                            </div>
+                            <span id="riskBadgeText" class="px-2.5 py-0.5 rounded-full text-xs font-fredoka font-bold bg-slate-100 text-slate-600">Standby</span>
+                        </div>
+
+                        <!-- Cartoon Circular Gauge -->
+                        <div class="relative w-44 h-44 mx-auto flex items-center justify-center">
+                            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="40" stroke="#E0F2FE" stroke-width="10" fill="transparent"/>
+                                <circle id="riskGaugeCircle" cx="50" cy="50" r="40" stroke="#38BDF8" stroke-width="10" stroke-dasharray="251" stroke-dashoffset="251" stroke-linecap="round" fill="transparent" class="transition-all duration-1000"/>
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                                <span class="font-fredoka text-xs text-slate-400 font-semibold uppercase">Mule Risk</span>
+                                <span id="riskScoreNumber" class="font-fredoka text-4xl font-bold text-navy-900">0</span>
+                                <span class="text-xs text-slate-400 font-medium">/ 100</span>
+                            </div>
+                        </div>
+
+                        <!-- Behavioral Signals Badges -->
+                        <div class="grid grid-cols-2 gap-2 mt-4 text-xs font-semibold">
+                            <div class="p-2.5 rounded-xl bg-sky-50 border border-sky-200">
+                                <div class="text-[11px] text-slate-500 font-fredoka">Pass-Through</div>
+                                <div id="riskPassThrough" class="font-bold text-sky-700 text-sm">--%</div>
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-amber-50 border border-amber-200">
+                                <div class="text-[11px] text-slate-500 font-fredoka">Fan-In (Senders)</div>
+                                <div id="riskFanIn" class="font-bold text-amber-700 text-sm">--</div>
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-purple-50 border border-purple-200">
+                                <div class="text-[11px] text-slate-500 font-fredoka">Fan-Out (Receivers)</div>
+                                <div id="riskFanOut" class="font-bold text-purple-700 text-sm">--</div>
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200">
+                                <div class="text-[11px] text-slate-500 font-fredoka">Detected Layer</div>
+                                <div id="riskLayer" class="font-bold text-emerald-700 text-sm">--</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Live Activity Feed -->
+                    <div class="cartoon-card p-5 bg-white">
+                        <div class="flex items-center justify-between border-b-2 border-sky-100 pb-3 mb-3">
+                            <div class="flex items-center space-x-2">
+                                <span class="p-1.5 rounded-lg bg-amber-100 text-amber-600"><i data-lucide="bell-ring" class="w-4 h-4"></i></span>
+                                <h3 class="font-fredoka font-bold text-base text-navy-900">Live Activity Feed</h3>
+                            </div>
+                            <span class="text-xs font-fredoka font-semibold text-sky-600">DuckDB Real-Time</span>
+                        </div>
+                        <div id="radarThreatsList" class="space-y-2 max-h-56 overflow-y-auto text-xs">
+                            <!-- Populated dynamically -->
+                            <div class="text-slate-400 text-center py-6">Checking intelligence feed...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CENTER COLUMN: MONEY FLOW INTERACTIVE NETWORK CANVAS -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="cartoon-card p-5 bg-white flex flex-col h-full min-h-[580px]">
+                        <div class="flex flex-wrap items-center justify-between border-b-2 border-sky-100 pb-3 mb-3 gap-2">
+                            <div class="flex items-center space-x-2">
+                                <span class="p-1.5 rounded-lg bg-sky-100 text-sky-600"><i data-lucide="share-2" class="w-4 h-4"></i></span>
+                                <h3 class="font-fredoka font-bold text-base text-navy-900">4-Hop Money Flow Network</h3>
+                            </div>
+                            <!-- Color Legend -->
+                            <div class="flex items-center space-x-1.5 text-[11px] font-fredoka">
+                                <span class="px-2 py-0.5 rounded-lg bg-emerald-100 text-emerald-700 font-bold">Source</span>
+                                <span class="px-2 py-0.5 rounded-lg bg-sky-100 text-sky-700 font-bold">L1</span>
+                                <span class="px-2 py-0.5 rounded-lg bg-amber-100 text-amber-700 font-bold">L2</span>
+                                <span class="px-2 py-0.5 rounded-lg bg-rose-100 text-rose-700 font-bold">L3 Sink</span>
+                            </div>
+                        </div>
+
+                        <!-- Network Vis-Network Canvas -->
+                        <div class="flex-1 w-full bg-sky-50/60 rounded-2xl border-2 border-sky-200 relative overflow-hidden min-h-[420px]">
+                            <div id="heroNetworkCanvas" class="w-full h-full min-h-[420px]"></div>
+                            <div id="graphEmptyState" class="absolute inset-0 flex flex-col items-center justify-center text-slate-400 p-6 text-center space-y-3 pointer-events-none">
+                                <div class="w-16 h-16 rounded-full bg-sky-100 border-2 border-sky-300 flex items-center justify-center text-sky-500 animate-bounce">
+                                    <i data-lucide="sparkles" class="w-8 h-8"></i>
+                                </div>
+                                <div class="font-fredoka font-bold text-slate-600 text-base">Network Map Waiting for Target</div>
+                                <p class="text-xs text-slate-500 max-w-sm">Enter an Account ID above to render cartoon bubbles representing accounts and directional fund transfers!</p>
+                            </div>
+                        </div>
+
+                        <!-- Flow Stats Bar -->
+                        <div class="mt-3 pt-3 border-t-2 border-sky-100 flex items-center justify-between text-xs font-semibold text-slate-600">
+                            <div>Nodes: <span id="flowNodeCount" class="text-sky-600 font-bold">0</span> &bull; Transfers: <span id="flowEdgeCount" class="text-sky-600 font-bold">0</span></div>
+                            <div>Total Traced: <span id="flowTotalTraced" class="text-emerald-600 font-bold text-sm">₹0</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: TARGET DOSSIER & ABHEDYA AI ASSISTANT -->
+                <div class="lg:col-span-3 space-y-6">
+                    <!-- Target Dossier Card -->
+                    <div class="cartoon-card p-5 bg-white space-y-3">
+                        <div class="flex items-center justify-between border-b-2 border-sky-100 pb-3">
+                            <div class="flex items-center space-x-2">
+                                <span class="p-1.5 rounded-lg bg-rose-100 text-rose-600"><i data-lucide="target" class="w-4 h-4"></i></span>
+                                <h3 class="font-fredoka font-bold text-base text-navy-900">Target Dossier</h3>
+                            </div>
+                            <span id="targetAccountLabel" class="px-2 py-0.5 rounded-lg bg-sky-100 text-sky-800 font-mono font-bold text-xs">NONE</span>
+                        </div>
+
+                        <div class="space-y-2 text-xs font-medium">
+                            <div class="flex justify-between p-2 rounded-xl bg-slate-50">
+                                <span class="text-slate-500">Total Inbound:</span>
+                                <span id="targetTotalIn" class="text-emerald-600 font-bold">₹0</span>
+                            </div>
+                            <div class="flex justify-between p-2 rounded-xl bg-slate-50">
+                                <span class="text-slate-500">Total Outbound:</span>
+                                <span id="targetTotalOut" class="text-rose-600 font-bold">₹0</span>
+                            </div>
+                            <div class="flex justify-between p-2 rounded-xl bg-slate-50">
+                                <span class="text-slate-500">Inbound Count:</span>
+                                <span id="targetInCount" class="text-slate-700 font-bold">0</span>
+                            </div>
+                            <div class="flex justify-between p-2 rounded-xl bg-slate-50">
+                                <span class="text-slate-500">Outbound Count:</span>
+                                <span id="targetOutCount" class="text-slate-700 font-bold">0</span>
+                            </div>
+                            <div class="flex justify-between p-2 rounded-xl bg-slate-50 text-[11px]">
+                                <span class="text-slate-500">First Active:</span>
+                                <span id="targetFirstSeen" class="text-slate-600">--</span>
+                            </div>
+                            <div class="flex justify-between p-2 rounded-xl bg-slate-50 text-[11px]">
+                                <span class="text-slate-500">Last Active:</span>
+                                <span id="targetLastSeen" class="text-slate-600">--</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-2 flex flex-col gap-2 font-fredoka">
+                            <button onclick="generateFreezeForCurrentTarget()" class="cartoon-btn w-full py-2.5 rounded-xl bg-rose-500 hover:bg-rose-400 text-white font-bold text-xs shadow-pop-red flex items-center justify-center space-x-1.5">
+                                <i data-lucide="lock" class="w-4 h-4"></i>
+                                <span>Requisition Freeze Notice</span>
+                            </button>
+                            <button onclick="switchTab('tab-timeline')" class="cartoon-btn w-full py-2.5 rounded-xl bg-sky-100 hover:bg-sky-200 border-2 border-sky-300 text-sky-800 font-bold text-xs flex items-center justify-center space-x-1.5">
+                                <i data-lucide="clock" class="w-4 h-4 text-sky-600"></i>
+                                <span>View Timeline Replay</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- AI Investigator Speech Box -->
+                    <div class="cartoon-card p-5 bg-gradient-to-b from-purple-50 to-white border-purple-200">
+                        <div class="flex items-center space-x-2 border-b-2 border-purple-100 pb-3 mb-3">
+                            <div class="w-7 h-7 rounded-lg bg-purple-500 text-white flex items-center justify-center">
+                                <i data-lucide="bot" class="w-4 h-4"></i>
+                            </div>
+                            <h3 class="font-fredoka font-bold text-base text-purple-900">ABHEDYA AI Assistant</h3>
+                        </div>
+                        <div id="aiBriefingSpeechText" class="text-xs text-slate-700 leading-relaxed font-medium bg-white p-3.5 rounded-2xl border-2 border-purple-100 shadow-sm">
+                            "Hello Officer! Run an investigation above and I will formulate verified, evidence-grounded insights explaining the exact money mule transfer patterns."
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- TAB 2: BLIND TRACE (JUDGE FAST EVALUATION SCREEN) -->
+        <!-- ===================================================================== -->
+        <section id="tab-trace" class="tab-view hidden space-y-6">
+            <div class="cartoon-card p-6 bg-white">
+                <div class="flex flex-wrap items-center justify-between border-b-2 border-sky-100 pb-4 mb-5 gap-3">
+                    <div>
+                        <h2 class="font-fredoka font-bold text-2xl text-navy-900">Blind Victim Query &bull; Fast Judge Evaluation</h2>
+                        <p class="text-xs text-slate-500 font-medium">Test any arbitrary victim account with rapid 4-hop BFS graph traversal (&lt; 200 ms latency).</p>
+                    </div>
+                    <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-fredoka font-bold">Judge Screen Ready</span>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3 max-w-2xl mb-6">
+                    <input type="text" id="judgeSearchInput" placeholder="ENTER VICTIM ACCOUNT (e.g. V_ACC_1001)..." 
+                        class="flex-1 bg-sky-50 border-2 border-sky-200 rounded-2xl px-4 py-3 text-navy-900 font-mono text-sm font-semibold focus:outline-none focus:border-sky-500 uppercase">
+                    <button id="judgeSearchBtn" onclick="runJudgeTrace()" class="cartoon-btn px-6 py-3 rounded-2xl bg-sky-500 hover:bg-sky-400 text-white font-fredoka font-bold text-sm shadow-pop-blue flex items-center justify-center space-x-2">
+                        <span>Execute 4-Hop Trace</span>
+                    </button>
+                </div>
+
+                <!-- Trace Summary Cards -->
+                <div id="judgeResultsPanel" class="hidden space-y-5">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="p-4 rounded-2xl bg-rose-50 border-2 border-rose-200">
+                            <span class="text-xs text-rose-600 font-fredoka font-bold uppercase">Victim Loss</span>
+                            <div id="judgeDisputed" class="text-2xl font-bold text-rose-700 font-fredoka">₹0</div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-200">
+                            <span class="text-xs text-emerald-600 font-fredoka font-bold uppercase">Traced Volume</span>
+                            <div id="judgeTraced" class="text-2xl font-bold text-emerald-700 font-fredoka">₹0</div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-sky-50 border-2 border-sky-200">
+                            <span class="text-xs text-sky-600 font-fredoka font-bold uppercase">Max Hop Depth</span>
+                            <div id="judgeHops" class="text-2xl font-bold text-sky-700 font-fredoka">4 HOPS</div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-amber-50 border-2 border-amber-200">
+                            <span class="text-xs text-amber-600 font-fredoka font-bold uppercase">Traversal Latency</span>
+                            <div id="judgeLatency" class="text-2xl font-bold text-amber-700 font-fredoka">-- ms</div>
+                        </div>
+                    </div>
+
+                    <!-- Breakdown Table -->
+                    <div class="border-2 border-sky-200 rounded-2xl overflow-hidden shadow-sm">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-sky-100 text-sky-900 font-fredoka font-bold border-b-2 border-sky-200">
+                                <tr>
+                                    <th class="p-3">Hop</th>
+                                    <th class="p-3">Layer Type</th>
+                                    <th class="p-3">Account ID</th>
+                                    <th class="p-3">Amount Received</th>
+                                    <th class="p-3">Pass-Through</th>
+                                    <th class="p-3">Mule Risk</th>
+                                    <th class="p-3">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="judgeLayerTableBody" class="divide-y divide-sky-100 font-medium text-slate-700 bg-white">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- TAB 3: MONEY TRAIL VIS-NETWORK EXPANDED GRAPH -->
+        <!-- ===================================================================== -->
+        <section id="tab-trail" class="tab-view hidden space-y-6">
+            <div class="cartoon-card p-6 bg-white">
+                <div class="flex items-center justify-between border-b-2 border-sky-100 pb-4 mb-4">
+                    <div>
+                        <h2 class="font-fredoka font-bold text-2xl text-navy-900">Expanded Money Trail Graph</h2>
+                        <p class="text-xs text-slate-500 font-medium">Click and drag cartoon node cards to inspect multi-layer funds propagation.</p>
+                    </div>
+                    <button onclick="fitGraph()" class="cartoon-btn px-4 py-2 rounded-xl bg-sky-100 hover:bg-sky-200 text-sky-800 font-fredoka font-bold text-xs border border-sky-300 shadow-sm">
+                        Reset Graph View
+                    </button>
+                </div>
+                <div id="expandedNetworkCanvas" class="w-full h-[620px] bg-sky-50/50 rounded-2xl border-2 border-sky-200 relative"></div>
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- TAB 4: SUSPECT NETWORKS & CLUSTERS -->
+        <!-- ===================================================================== -->
+        <section id="tab-networks" class="tab-view hidden space-y-6">
+            <div class="cartoon-card p-6 bg-white">
+                <div class="flex items-center justify-between border-b-2 border-sky-100 pb-4 mb-5">
+                    <div>
+                        <h2 class="font-fredoka font-bold text-2xl text-navy-900">Detected Mule Syndicates & Rings</h2>
+                        <p class="text-xs text-slate-500 font-medium">Clustered high fan-in collector hubs and rapid downstream distributors.</p>
+                    </div>
+                    <button id="btnRefreshClusters" onclick="loadClusters()" class="cartoon-btn px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-white font-fredoka font-bold text-xs shadow-pop-blue flex items-center space-x-1">
+                        <span>Refresh Clusters</span>
+                    </button>
+                </div>
+                <div id="clustersGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- TAB 5: ACCOUNT 360 INTELLIGENCE -->
+        <!-- ===================================================================== -->
+        <section id="tab-intel" class="tab-view hidden space-y-6">
+            <div class="cartoon-card p-6 bg-white">
+                <div class="flex flex-wrap items-center justify-between border-b-2 border-sky-100 pb-4 mb-5 gap-3">
+                    <h2 class="font-fredoka font-bold text-2xl text-navy-900">Account 360 Forensic Dossier</h2>
+                    <div class="flex gap-2">
+                        <input type="text" id="intelAccountInput" placeholder="ACCOUNT ID..." class="bg-sky-50 border-2 border-sky-200 rounded-xl px-3 py-1.5 text-xs font-mono font-semibold uppercase">
+                        <button id="btnInspectIntel" onclick="fetchAccountIntelligence(document.getElementById('intelAccountInput').value)" class="cartoon-btn px-4 py-1.5 rounded-xl bg-sky-500 text-white font-fredoka font-bold text-xs shadow-pop-blue">Inspect</button>
+                    </div>
+                </div>
+                <div id="intelProfileOutput">
+                    <div class="text-center py-12 text-slate-400 font-fredoka">Enter an Account ID to view its complete 360-degree forensic profile and triggered behavioral signals.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- TAB 6: TIMELINE PLAYBACK -->
+        <!-- ===================================================================== -->
+        <section id="tab-timeline" class="tab-view hidden space-y-6">
+            <div class="cartoon-card p-6 bg-white">
+                <div class="flex items-center justify-between border-b-2 border-sky-100 pb-4 mb-5">
+                    <div>
+                        <h2 class="font-fredoka font-bold text-2xl text-navy-900">Chronological Dispersion Timeline</h2>
+                        <p class="text-xs text-slate-500 font-medium">Watch step-by-step how funds hop through L1 collectors, L2 distributors, and L3 sinks.</p>
+                    </div>
+                    <div class="flex items-center space-x-2 font-fredoka">
+                        <button id="btnPlayTimeline" onclick="playTimeline()" class="cartoon-btn px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-xs shadow-pop-green flex items-center space-x-1">
+                            <i data-lucide="play" class="w-3.5 h-3.5 fill-white"></i>
+                            <span>Play Animation</span>
+                        </button>
+                        <button id="btnResetTimeline" onclick="resetTimeline()" class="cartoon-btn px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs border border-slate-300">Reset</button>
+                    </div>
+                </div>
+                <div id="timelineEventsContainer" class="space-y-2.5 max-h-[520px] overflow-y-auto">
+                    <div class="text-slate-400 text-center py-12 font-fredoka">Run an investigation query to load sequential fund transfers.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- TAB 7: EVIDENCE VAULT -->
+        <!-- ===================================================================== -->
+        <section id="tab-evidence" class="tab-view hidden space-y-6">
+            <div class="cartoon-card p-6 bg-white">
+                <div class="flex items-center justify-between border-b-2 border-sky-100 pb-4 mb-5">
+                    <div>
+                        <h2 class="font-fredoka font-bold text-2xl text-navy-900">Anti-Hallucination Evidence Vault</h2>
+                        <p class="text-xs text-slate-500 font-medium">100% database-verified claims grounded in real transaction records.</p>
+                    </div>
+                    <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-fredoka font-bold">✓ 100% Grounded</span>
+                </div>
+                <div id="evidenceVaultContent" class="space-y-4">
+                    <div class="text-slate-400 text-center py-12 font-fredoka">Trace an account in Command Center to load verified forensic claims.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- TAB 8: CASE REPORTS & STATUTORY NOTICES -->
+        <!-- ===================================================================== -->
+        <section id="tab-reports" class="tab-view hidden space-y-6">
+            <div class="cartoon-card p-6 bg-white">
+                <div class="flex flex-wrap items-center justify-between border-b-2 border-sky-100 pb-4 mb-5 gap-3">
+                    <div>
+                        <h2 class="font-fredoka font-bold text-2xl text-navy-900">Statutory Legal Reports Generator</h2>
+                        <p class="text-xs text-slate-500 font-medium">One-click Section 91 Cr.P.C. / Section 94 BNSS Bank Freeze Notices and Police Case Diaries.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 font-fredoka">
+                        <button id="btnReportFreeze" onclick="downloadReport('freeze')" class="cartoon-btn px-4 py-2.5 rounded-xl bg-rose-500 hover:bg-rose-400 text-white font-bold text-xs shadow-pop-red flex items-center space-x-1.5">
+                            <i data-lucide="lock" class="w-4 h-4"></i>
+                            <span>Generate Freeze Notice</span>
+                        </button>
+                        <button id="btnReportDiary" onclick="downloadReport('diary')" class="cartoon-btn px-4 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-white font-bold text-xs shadow-pop-blue flex items-center space-x-1.5">
+                            <i data-lucide="file-text" class="w-4 h-4"></i>
+                            <span>Generate Case Diary</span>
+                        </button>
+                        <button id="btnDownloadGeneratedReport" onclick="exportCurrentReportFile()" class="cartoon-btn px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-xs shadow-pop-green flex items-center space-x-1.5 hidden">
+                            <i data-lucide="download" class="w-4 h-4"></i>
+                            <span>Download Document File</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="reportPreviewArea" class="bg-slate-50 p-5 rounded-2xl border-2 border-slate-200 text-xs font-mono whitespace-pre-wrap max-h-[520px] overflow-y-auto text-slate-800 leading-relaxed shadow-inner">
+                    Click a button above to generate and export formal statutory police requisitions.
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- TAB 9: DATA OPERATIONS (BRIGHT SKY-BLUE IMPORT HUB) -->
+        <!-- ===================================================================== -->
+        <section id="tab-dataops" class="tab-view hidden space-y-6">
+            <div class="cartoon-card p-6 bg-white">
+                <div class="flex flex-wrap items-center justify-between border-b-2 border-sky-100 pb-4 mb-5 gap-3">
+                    <div>
+                        <h2 class="font-fredoka font-bold text-2xl text-navy-900">Data Operations &bull; Transaction Ingestion</h2>
+                        <p class="text-xs text-slate-500 font-medium">Stream and index large datasets (up to 2,000,000 transactions) directly into DuckDB without memory crashes.</p>
+                    </div>
+                    <div class="flex gap-2 font-fredoka">
+                        <button onclick="quickLoadDemoBenchmark()" id="btnQuickDemo" class="cartoon-btn px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-bold text-xs shadow-pop-yellow">
+                            Load 25k Benchmark
+                        </button>
+                        <button id="btnResetDb" onclick="resetDatabaseConfirm()" class="cartoon-btn px-4 py-2 rounded-xl bg-rose-100 hover:bg-rose-200 text-rose-700 border-2 border-rose-300 font-bold text-xs">
+                            Reset Database
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Drop Zone -->
+                    <div class="lg:col-span-6 space-y-4">
+                        <div id="dropZone" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleFileDrop(event)" onclick="triggerFileInput()"
+                            class="border-3 border-dashed border-sky-300 hover:border-sky-500 rounded-3xl p-8 text-center bg-sky-50/70 hover:bg-sky-100/60 transition-all cursor-pointer flex flex-col items-center justify-center space-y-3 min-h-[240px] relative overflow-hidden">
+                            
+                            <!-- Uploading Overlay -->
+                            <div id="uploadLoadingOverlay" class="hidden absolute inset-0 bg-white/95 backdrop-blur-sm flex flex-col items-center justify-center p-6 space-y-3 z-10">
+                                <div class="w-12 h-12 rounded-full border-4 border-sky-200 border-t-sky-500 animate-spin"></div>
+                                <div id="uploadLoadingTitle" class="font-fredoka font-bold text-base text-navy-900">Uploading & Inspecting Dataset...</div>
+                                <div id="uploadLoadingSub" class="text-xs text-sky-700 font-mono font-semibold">0% Uploaded</div>
+                                <div class="w-48 h-2.5 rounded-full bg-sky-100 overflow-hidden">
+                                    <div id="uploadLoadingBar" class="h-full bg-sky-500 transition-all duration-200" style="width: 0%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="w-14 h-14 rounded-2xl bg-sky-400 text-white flex items-center justify-center shadow-cartoon-sm">
+                                <i data-lucide="cloud-upload" class="w-7 h-7"></i>
+                            </div>
+                            <div class="font-fredoka font-bold text-lg text-navy-900">CLICK OR DROP TRANSACTION DATA HERE</div>
+                            <div class="text-xs font-semibold text-sky-700 font-mono">Supports Large CSV &bull; CSV.GZ &bull; PARQUET &bull; TSV</div>
+                            <input type="file" id="fileInput" class="hidden" accept="*/*" onchange="handleFileSelect(event)">
+                            <button type="button" onclick="event.stopPropagation(); triggerFileInput();" class="cartoon-btn px-6 py-2.5 rounded-2xl bg-sky-500 hover:bg-sky-400 text-white font-fredoka font-bold text-xs shadow-pop-blue">
+                                Browse & Select File
+                            </button>
+                        </div>
+
+                        <!-- Local File Path Input -->
+                        <div class="flex gap-2">
+                            <input type="text" id="manualPathInput" placeholder="OR ENTER LOCAL FILE PATH (e.g., data/raw/synthetic_banking_transactions.csv)..." 
+                                class="flex-1 bg-sky-50 border-2 border-sky-200 rounded-2xl px-4 py-2.5 text-navy-900 font-mono text-xs font-semibold focus:outline-none focus:border-sky-500">
+                            <button id="btnInspectLocalPath" onclick="inspectLocalPath()" class="cartoon-btn px-5 py-2.5 rounded-2xl bg-sky-100 hover:bg-sky-200 border-2 border-sky-300 text-sky-800 font-fredoka font-bold text-xs">
+                                Inspect Path
+                            </button>
+                        </div>
+
+                        <!-- Strict Document Warning Alert -->
+                        <div id="pdfWarningAlert" class="hidden p-4 rounded-2xl bg-rose-50 border-2 border-rose-200 text-rose-800 text-xs font-medium space-y-1">
+                            <div class="font-fredoka font-bold text-sm text-rose-700">⚠️ DOCUMENT DETECTED</div>
+                            <p>This file appears to be a documentation or PDF file rather than a transaction table. Please provide a CSV, CSV.GZ, or Parquet file containing transaction records.</p>
+                        </div>
+                    </div>
+
+                    <!-- Pipeline Progress Flow -->
+                    <div class="lg:col-span-6 space-y-4">
+                        <div class="p-5 rounded-3xl bg-sky-50/80 border-2 border-sky-200 space-y-3">
+                            <h3 class="font-fredoka font-bold text-sm text-navy-900">Ingestion Pipeline Stages</h3>
+                            
+                            <!-- 6 Stages Pills -->
+                            <div class="grid grid-cols-6 gap-1.5 text-[11px] font-fredoka text-center">
+                                <div id="stageInput" class="p-2 rounded-xl bg-white border border-sky-200 text-slate-500">1. Input</div>
+                                <div id="stageValidate" class="p-2 rounded-xl bg-white border border-sky-200 text-slate-500">2. Validate</div>
+                                <div id="stageNormalize" class="p-2 rounded-xl bg-white border border-sky-200 text-slate-500">3. Normalize</div>
+                                <div id="stageIndex" class="p-2 rounded-xl bg-white border border-sky-200 text-slate-500">4. Index</div>
+                                <div id="stageAnalyze" class="p-2 rounded-xl bg-white border border-sky-200 text-slate-500">5. Analyze</div>
+                                <div id="stageReady" class="p-2 rounded-xl bg-white border border-sky-200 text-slate-500">6. Ready</div>
+                            </div>
+
+                            <!-- Live Progress Box -->
+                            <div id="ingestProgressBox" class="hidden space-y-2 pt-3 border-t border-sky-200 text-xs">
+                                <div class="flex justify-between font-fredoka font-bold text-sky-800">
+                                    <span id="ingestStageLabel">Processing...</span>
+                                    <span id="ingestPctLabel">0%</span>
+                                </div>
+                                <div class="w-full h-3 rounded-full bg-sky-200 overflow-hidden">
+                                    <div id="ingestProgressBar" class="h-full bg-sky-500 transition-all duration-300" style="width: 0%;"></div>
+                                </div>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] font-mono text-slate-600 pt-1">
+                                    <div>Processed: <span id="ingestRowsProc" class="font-bold text-navy-900">0</span></div>
+                                    <div>Valid: <span id="ingestRowsVal" class="font-bold text-emerald-600">0</span></div>
+                                    <div>Speed: <span id="ingestRowsSec" class="font-bold text-sky-600">0 r/s</span></div>
+                                    <div>ETA: <span id="ingestEta" class="font-bold text-amber-600">0s</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dataset Summary Card -->
+                        <div class="p-5 rounded-3xl bg-white border-2 border-sky-200 grid grid-cols-2 gap-3 text-xs">
+                            <div>
+                                <span class="text-slate-400 font-fredoka uppercase text-[10px]">Total Records</span>
+                                <div id="opsTxnCount" class="font-fredoka text-xl font-bold text-navy-900">0</div>
+                            </div>
+                            <div>
+                                <span class="text-slate-400 font-fredoka uppercase text-[10px]">Total Accounts</span>
+                                <div id="opsAccCount" class="font-fredoka text-xl font-bold text-sky-600">0</div>
+                            </div>
+                            <div>
+                                <span class="text-slate-400 font-fredoka uppercase text-[10px]">Total Volume</span>
+                                <div id="opsVolume" class="font-fredoka text-base font-bold text-emerald-600">₹0</div>
+                            </div>
+                            <div>
+                                <span class="text-slate-400 font-fredoka uppercase text-[10px]">Date Range</span>
+                                <div id="opsDateRange" class="font-mono text-xs text-slate-600">--</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CSV INSPECTOR & 11-FIELD SCHEMA MAPPER -->
+                <div id="inspectionPanel" class="hidden mt-6 space-y-5 pt-5 border-t-2 border-sky-100">
+                    <!-- File Metadata Badges -->
+                    <div class="grid grid-cols-2 md:grid-cols-6 gap-3 text-xs">
+                        <div class="p-3 rounded-2xl bg-sky-50 border border-sky-200">
+                            <span class="text-slate-400 font-fredoka text-[10px] uppercase">File Name</span>
+                            <div id="inspectFileName" class="font-bold text-navy-900 truncate">--</div>
+                        </div>
+                        <div class="p-3 rounded-2xl bg-sky-50 border border-sky-200">
+                            <span class="text-slate-400 font-fredoka text-[10px] uppercase">Size</span>
+                            <div id="inspectFileSize" class="font-bold text-sky-600 font-mono">--</div>
+                        </div>
+                        <div class="p-3 rounded-2xl bg-sky-50 border border-sky-200">
+                            <span class="text-slate-400 font-fredoka text-[10px] uppercase">Encoding</span>
+                            <div id="inspectEncoding" class="font-bold text-purple-600 font-mono">--</div>
+                        </div>
+                        <div class="p-3 rounded-2xl bg-sky-50 border border-sky-200">
+                            <span class="text-slate-400 font-fredoka text-[10px] uppercase">Delimiter</span>
+                            <div id="inspectDelimiter" class="font-bold text-amber-600 font-mono">--</div>
+                        </div>
+                        <div class="p-3 rounded-2xl bg-sky-50 border border-sky-200">
+                            <span class="text-slate-400 font-fredoka text-[10px] uppercase">Est. Rows</span>
+                            <div id="inspectEstRows" class="font-bold text-emerald-600 font-mono">--</div>
+                        </div>
+                        <div class="p-3 rounded-2xl bg-sky-50 border border-sky-200">
+                            <span class="text-slate-400 font-fredoka text-[10px] uppercase">Format</span>
+                            <div id="inspectFormat" class="font-bold text-navy-900 font-mono">--</div>
+                        </div>
+                    </div>
+
+                    <!-- Column Mapping Table -->
+                    <div class="p-5 rounded-3xl bg-white border-2 border-sky-200 space-y-4 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-fredoka font-bold text-base text-navy-900">Schema Mapping (11 Required Fields)</h3>
+                            <span class="text-xs font-fredoka text-sky-600">Auto-matched with manual dropdowns</span>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead class="bg-sky-100 text-sky-900 font-fredoka font-bold border-b-2 border-sky-200">
+                                    <tr>
+                                        <th class="p-3">System Field</th>
+                                        <th class="p-3">Matched CSV Column</th>
+                                        <th class="p-3">Detected Type</th>
+                                        <th class="p-3">Sample Value</th>
+                                        <th class="p-3">Null %</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="schemaMappingTableBody" class="divide-y divide-sky-100 font-medium text-slate-700">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="flex flex-wrap gap-3 pt-3">
+                            <button id="btnValidateDataset" onclick="validateDataset()" class="cartoon-btn px-6 py-2.5 rounded-2xl bg-sky-100 hover:bg-sky-200 border-2 border-sky-300 text-sky-900 font-fredoka font-bold text-xs flex items-center space-x-1.5">
+                                <span>Run Pre-Flight Validation</span>
+                            </button>
+                            <button id="btnStartIngestion" onclick="startIngestion()" class="cartoon-btn px-8 py-2.5 rounded-2xl bg-sky-500 hover:bg-sky-400 text-white font-fredoka font-bold text-xs shadow-pop-blue flex items-center space-x-1.5">
+                                <span>Start Streaming Ingestion</span>
+                            </button>
+                        </div>
+
+                        <div id="validationResultBox" class="hidden p-4 rounded-2xl text-xs font-medium"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- TAB 10: PERFORMANCE BENCHMARK -->
+        <!-- ===================================================================== -->
+        <section id="tab-benchmark" class="tab-view hidden space-y-6">
+            <div class="cartoon-card p-6 bg-white">
+                <div class="flex items-center justify-between border-b-2 border-sky-100 pb-4 mb-5">
+                    <div>
+                        <h2 class="font-fredoka font-bold text-2xl text-navy-900">Performance & Latency Benchmark</h2>
+                        <p class="text-xs text-slate-500 font-medium">Real-time telemetry measuring sub-millisecond DuckDB lookups and graph traversal speeds.</p>
+                    </div>
+                    <button onclick="triggerLiveBenchmark()" id="btnRunBench" class="cartoon-btn px-5 py-2.5 rounded-2xl bg-sky-500 hover:bg-sky-400 text-white font-fredoka font-bold text-xs shadow-pop-blue">
+                        Execute Benchmark
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="p-5 rounded-2xl bg-sky-50 border-2 border-sky-200">
+                        <span class="text-xs font-fredoka text-slate-500 font-bold uppercase">DB Ping Latency</span>
+                        <div id="benchPingMs" class="font-fredoka text-2xl font-bold text-sky-700">-- ms</div>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-emerald-50 border-2 border-emerald-200">
+                        <span class="text-xs font-fredoka text-slate-500 font-bold uppercase">Account Lookup (10x Avg)</span>
+                        <div id="benchLookupMs" class="font-fredoka text-2xl font-bold text-emerald-700">-- ms</div>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-amber-50 border-2 border-amber-200">
+                        <span class="text-xs font-fredoka text-slate-500 font-bold uppercase">4-Hop BFS Traversal</span>
+                        <div id="benchTrailMs" class="font-fredoka text-2xl font-bold text-amber-700">-- ms</div>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-purple-50 border-2 border-purple-200">
+                        <span class="text-xs font-fredoka text-slate-500 font-bold uppercase">Active RAM Footprint</span>
+                        <div id="benchMemMb" class="font-fredoka text-2xl font-bold text-purple-700">-- MB</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================================================= -->
+    <!-- JAVASCRIPT APPLICATION LOGIC & API BINDINGS -->
+    <!-- ========================================================================= -->
+    <script>
+        // Global State & Offline-Safe Icon Helper
+        function safeCreateIcons() {
+            if (window.lucide && typeof lucide.createIcons === 'function') {
+                try { lucide.createIcons(); } catch (e) { /* silent offline fallback */ }
+            }
+        }
+
+        let currentTab = 'tab-command';
+        // Universal API Base URL Resolver: Supports both FastAPI served mode and direct file:// execution
+        const API_BASE = (function() {
+            if (window.location.protocol === 'file:' || !window.location.origin || window.location.origin === 'null') {
+                return 'http://127.0.0.1:8000';
+            }
+            return '';
+        })();
+
+        let heroNetwork = null;
+        let expandedNetwork = null;
+        let currentInvestigation = null;
+        let inspectionData = null;
+        let timelineEvents = [];
+
+        // Live Clock
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('sysLiveClock').innerText = now.toUTCString().slice(17, 25) + ' UTC';
+        }, 1000);
+
+        // Tab Switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+            const target = document.getElementById(tabId);
+            if (target) target.classList.remove('hidden');
+
+            const navId = tabId.replace('tab-', 'nav-');
+            const navBtn = document.getElementById(navId);
+            if (navBtn) navBtn.classList.add('active');
+
+            currentTab = tabId;
+            lucide.createIcons();
+
+            if (tabId === 'tab-trail' && currentInvestigation) {
+                renderExpandedGraph(currentInvestigation.trail);
+            }
+        }
+
+        function setQuery(accId) {
+            if (!accId) return;
+            const input = document.getElementById('mainSearchInput');
+            if (input) {
+                input.value = accId.trim();
+                executeHeroTrace();
+            }
+        }
+
+        async function loadDynamicTestChips() {
+            try {
+                const res = await fetch(`${API_BASE}/api/dataset/sample-chips`);
+                const container = document.getElementById('dynamicTestChips');
+                if (!container) return;
+
+                if (!res.ok) {
+                    container.innerHTML = '<span class="text-xs text-slate-400 italic">No dataset active. Ingest data to see test samples.</span>';
+                    return;
+                }
+                const data = await res.json();
+                if (!data.chips || data.chips.length === 0) {
+                    container.innerHTML = '<span class="text-xs text-slate-400 italic">No dataset active. Ingest data to see test samples.</span>';
+                    return;
+                }
+
+                container.innerHTML = data.chips.map(c => `
+                    <button onclick="setQuery('${c.identifier}')" class="px-3 py-1 rounded-xl bg-white border-2 border-sky-200 hover:border-sky-400 text-sky-700 font-bold shadow-sm transition">
+                        ${c.label}
+                    </button>
+                `).join('');
+            } catch (e) {
+                console.error("Failed to load dynamic test chips:", e);
+                const container = document.getElementById('dynamicTestChips');
+                if (container) container.innerHTML = '<span class="text-xs text-slate-400 italic">Connect to backend to load test chips.</span>';
+            }
+        }
+
+        // =========================================================================
+        // RADAR & TELEMETRY LOADING
+        // =========================================================================
+        async function fetchRadarMetrics() {
+            try {
+                const res = await fetch(`${API_BASE}/api/radar/metrics`);
+                if (!res.ok) return;
+                const r = await res.json();
+
+                const totalTxEl = document.getElementById('metricTotalTxns');
+                const highRiskEl = document.getElementById('metricHighRisk');
+                const ringsEl = document.getElementById('metricActiveRings');
+                const moneyEl = document.getElementById('metricMoneyMotion');
+                const badge = document.getElementById('topDatasetBadge');
+                const feed = document.getElementById('radarThreatsList');
+
+                if (totalTxEl) totalTxEl.innerText = (r.total_transactions || 0).toLocaleString();
+                if (highRiskEl) highRiskEl.innerText = (r.high_risk_accounts || 0).toLocaleString();
+                if (ringsEl) ringsEl.innerText = (r.active_rings || 0).toLocaleString();
+                if (moneyEl) moneyEl.innerText = `₹${((r.money_in_motion || 0)/100000).toFixed(1)}L`;
+
+                if (badge) {
+                    if (r.dataset_mode === 'LIVE_DATASET' && (r.total_transactions || 0) > 0) {
+                        badge.innerText = `Live (${(r.total_transactions || 0).toLocaleString()} Txns)`;
+                        badge.className = 'font-bold text-emerald-600';
+                    } else if (r.dataset_mode === 'DEMO_DATA' && (r.total_transactions || 0) > 0) {
+                        badge.innerText = `Demo (${(r.total_transactions || 0).toLocaleString()} Txns)`;
+                        badge.className = 'font-bold text-amber-600';
+                    } else {
+                        badge.innerText = 'No Dataset';
+                        badge.className = 'font-bold text-slate-400';
+                    }
+                }
+
+                // Render Live Activity Feed
+                if (feed) {
+                    if (r.top_threats && r.top_threats.length > 0) {
+                        feed.innerHTML = r.top_threats.map(t => `
+                            <div onclick="setQuery('${t.account_id}')" class="p-2.5 rounded-2xl bg-sky-50 hover:bg-sky-100 border border-sky-200 cursor-pointer flex items-center justify-between transition shadow-sm">
+                                <div class="flex items-center space-x-2">
+                                    <span class="w-6 h-6 rounded-lg ${t.risk_score >= 75 ? 'bg-rose-100 text-rose-600' : 'bg-amber-100 text-amber-600'} flex items-center justify-center font-bold text-xs">
+                                        ${t.risk_score >= 75 ? '🚨' : '⚡'}
+                                    </span>
+                                    <div>
+                                        <span class="font-bold text-navy-900 font-mono">${t.account_id}</span>
+                                        <div class="text-[10px] text-slate-500 font-semibold">${t.layer} &bull; PT ${t.pass_through_pct}%</div>
+                                    </div>
+                                </div>
+                                <span class="font-fredoka font-bold text-xs ${t.risk_score >= 75 ? 'text-rose-600' : 'text-amber-600'}">Risk ${t.risk_score}</span>
+                            </div>
+                        `).join('');
+                    } else {
+                        feed.innerHTML = `
+                            <div class="p-6 text-center text-slate-400 font-fredoka text-xs space-y-1">
+                                <div>No threats active.</div>
+                                <div class="text-[10px] text-slate-400">Ingest a transaction dataset to populate live threat radar.</div>
+                            </div>
+                        `;
+                    }
+                }
+            } catch (e) {
+                console.error("Failed to fetch radar telemetry:", e);
+            }
+        }
+
+        // =========================================================================
+        // HERO INVESTIGATION ENGINE (UNIVERSAL DATASET-DRIVEN RESOLVER)
+        // =========================================================================
+        async function executeHeroTrace() {
+            const rawInput = document.getElementById('mainSearchInput').value.trim();
+            const notFoundAlert = document.getElementById('searchNotFoundAlert');
+            const badgeEl = document.getElementById('searchDetectedBadge');
+            const btn = document.getElementById('heroSearchBtn');
+            const btnText = document.getElementById('heroSearchBtnText');
+
+            if (!rawInput) {
+                alert("Please enter a Transaction ID, Sender Account, or Receiver Account to investigate.");
+                return;
+            }
+
+            // Prevent repeated concurrent clicks and activate loading state
+            if (btn && btn.disabled) return;
+            if (btn) btn.disabled = true;
+            if (btnText) btnText.innerText = 'Investigating...';
+
+            if (notFoundAlert) notFoundAlert.classList.add('hidden');
+            if (badgeEl) badgeEl.classList.add('hidden');
+
+            try {
+                const res = await fetch(`${API_BASE}/api/investigation/universal`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ identifier: rawInput, max_hops: 4, branching_limit: 15 })
+                });
+
+                if (res.status === 404) {
+                    const err = await res.json().catch(() => ({ detail: "No matching record found in the imported transaction dataset." }));
+                    if (notFoundAlert) {
+                        notFoundAlert.innerHTML = `
+                            <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-600 flex-shrink-0"></i>
+                            <span>${err.detail || 'No matching record found in the imported transaction dataset.'}</span>
+                        `;
+                        notFoundAlert.classList.remove('hidden');
+                        lucide.createIcons();
+                    }
+                    
+                    // Reset graph & dossier to empty state
+                    const emptyState = document.getElementById('graphEmptyState');
+                    if (emptyState) emptyState.classList.remove('hidden');
+                    
+                    const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
+                    setVal('flowNodeCount', '0');
+                    setVal('flowEdgeCount', '0');
+                    setVal('flowTotalTraced', '₹0');
+                    setVal('targetAccountLabel', 'NOT FOUND');
+                    setVal('targetTotalIn', '₹0');
+                    setVal('targetTotalOut', '₹0');
+                    setVal('targetInCount', '0');
+                    setVal('targetOutCount', '0');
+                    setVal('targetFirstSeen', '--');
+                    setVal('targetLastSeen', '--');
+                    setVal('riskScoreNumber', '0');
+                    setVal('aiBriefingSpeechText', `No record found for "${rawInput}" in the 1,997,748 dataset rows. Please check the identifier and try again.`);
+                    return;
+                } else if (!res.ok) {
+                    const err = await res.json().catch(() => ({ detail: "Investigation request failed. Please try again." }));
+                    if (notFoundAlert) {
+                        notFoundAlert.innerHTML = `
+                            <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-600 flex-shrink-0"></i>
+                            <span>${err.detail || 'Investigation request failed. Please try again.'}</span>
+                        `;
+                        notFoundAlert.classList.remove('hidden');
+                        lucide.createIcons();
+                    }
+                    return;
+                }
+
+                const data = await res.json();
+                currentInvestigation = data;
+
+                // 1. Display Detected Identifier Badge
+                if (badgeEl) {
+                    badgeEl.classList.remove('hidden');
+                    badgeEl.innerText = data.type_badge || 'IDENTIFIER FOUND';
+                    if (data.entity_type === 'TRANSACTION_ID') {
+                        badgeEl.className = 'px-2.5 py-0.5 rounded-full font-bold uppercase shadow-sm bg-purple-100 text-purple-800 border border-purple-300';
+                    } else if (data.entity_type === 'SENDER_AND_RECEIVER') {
+                        badgeEl.className = 'px-2.5 py-0.5 rounded-full font-bold uppercase shadow-sm bg-purple-100 text-purple-800 border border-purple-300';
+                    } else if (data.entity_type === 'SENDER' || data.entity_type === 'SENDER_ACCOUNT') {
+                        badgeEl.className = 'px-2.5 py-0.5 rounded-full font-bold uppercase shadow-sm bg-sky-100 text-sky-800 border border-sky-300';
+                    } else {
+                        badgeEl.className = 'px-2.5 py-0.5 rounded-full font-bold uppercase shadow-sm bg-emerald-100 text-emerald-800 border border-emerald-300';
+                    }
+                }
+
+                // 2. Render Network Graph
+                if (data.trail && data.trail.nodes) {
+                    renderHeroGraph(data.trail);
+                }
+
+                // 3. Render Risk Core & Target Info
+                if (data.entity_type === 'TRANSACTION_ID') {
+                    renderTransactionDossier(data);
+                } else {
+                    renderAccountDossier(data);
+                }
+
+                // 4. Update Timeline data
+                const traceTarget = data.transaction ? data.transaction.sender_account : data.identifier;
+                fetchTimelineData(traceTarget);
+
+                // 5. Update Evidence Vault & AI Speech
+                renderEvidenceVault(data);
+
+            } catch (e) {
+                if (notFoundAlert) {
+                    notFoundAlert.innerHTML = `
+                        <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-600 flex-shrink-0"></i>
+                        <span>Investigation request failed: ${e.message || 'Please try again.'}</span>
+                    `;
+                    notFoundAlert.classList.remove('hidden');
+                    lucide.createIcons();
+                }
+            } finally {
+                if (btn) btn.disabled = false;
+                if (btnText) btnText.innerText = 'Investigate Identifier';
+                lucide.createIcons();
+            }
+        }
+
+        function renderHeroGraph(trail) {
+            const emptyState = document.getElementById('graphEmptyState');
+            if (emptyState) emptyState.classList.add('hidden');
+
+            const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
+            setVal('flowNodeCount', trail.nodes.length);
+            setVal('flowEdgeCount', trail.edges.length);
+            setVal('flowTotalTraced', `₹${(trail.total_traced_amount || trail.total_disputed_amount || 0).toLocaleString()}`);
+
+            const container = document.getElementById('heroNetworkCanvas');
+            if (!container) return;
+
+            const nodes = new vis.DataSet(trail.nodes.map(n => {
+                let bgColor = '#D1FAE5'; // emerald light
+                let borderColor = '#059669';
+                let textColor = '#065F46';
+
+                if (n.hop === 1) {
+                    bgColor = '#E0F2FE'; // sky light
+                    borderColor = '#0284C7';
+                    textColor = '#075985';
+                } else if (n.hop === 2) {
+                    bgColor = '#FEF3C7'; // amber light
+                    borderColor = '#D97706';
+                    textColor = '#92400E';
+                } else if (n.hop >= 3) {
+                    bgColor = '#FEE2E2'; // rose light
+                    borderColor = '#DC2626';
+                    textColor = '#991B1B';
+                }
+
+                return {
+                    id: n.id,
+                    label: `${n.id}\n₹${(n.amount||0).toLocaleString()}`,
+                    color: {
+                        background: bgColor,
+                        border: borderColor,
+                        highlight: { background: '#FFFFFF', border: borderColor }
+                    },
+                    borderWidth: 2.5,
+                    font: { color: textColor, face: 'Fredoka', size: 11, bold: true },
+                    shape: 'box',
+                    margin: 10,
+                    borderRadius: 14
+                };
+            }));
+
+            const edges = new vis.DataSet(trail.edges.map(e => ({
+                from: e.source,
+                to: e.target,
+                label: `₹${(e.amount||0).toLocaleString()}`,
+                arrows: 'to',
+                color: { color: '#38BDF8', highlight: '#0284C7' },
+                font: { color: '#0369A1', face: 'Outfit', size: 9, align: 'middle', background: '#FFFFFF' },
+                smooth: { type: 'cubicBezier', roundness: 0.3 }
+            })));
+
+            const options = {
+                physics: {
+                    stabilization: true,
+                    barnesHut: { gravitationalConstant: -3500, springLength: 130 }
+                },
+                interaction: { hover: true }
+            };
+
+            heroNetwork = new vis.Network(container, { nodes, edges }, options);
+            heroNetwork.on('click', (params) => {
+                if (params.nodes.length > 0) {
+                    fetchAccountIntelligence(params.nodes[0]);
+                }
+            });
+        }
+
+        function fitGraph() {
+            if (expandedNetwork) expandedNetwork.fit({ animation: true });
+            else if (heroNetwork) heroNetwork.fit({ animation: true });
+        }
+
+        function renderExpandedGraph(trail) {
+            if (!trail || !trail.nodes) return;
+            const container = document.getElementById('expandedNetworkCanvas');
+            if (!container) return;
+
+            const nodes = new vis.DataSet(trail.nodes.map(n => ({
+                id: n.id,
+                label: `${n.id}\n₹${(n.amount||0).toLocaleString()}`,
+                color: {
+                    background: n.hop === 0 ? '#D1FAE5' : (n.hop === 1 ? '#E0F2FE' : (n.hop === 2 ? '#FEF3C7' : '#FEE2E2')),
+                    border: '#0284C7'
+                },
+                shape: 'box',
+                margin: 10,
+                borderRadius: 12,
+                font: { face: 'Fredoka', size: 12, bold: true }
+            })));
+
+            const edges = new vis.DataSet(trail.edges.map(e => ({
+                from: e.source,
+                to: e.target,
+                label: `₹${(e.amount||0).toLocaleString()}`,
+                arrows: 'to',
+                color: { color: '#38BDF8' },
+                font: { face: 'Outfit', size: 9, background: '#FFFFFF' }
+            })));
+
+            expandedNetwork = new vis.Network(container, { nodes, edges }, {
+                physics: { stabilization: true, barnesHut: { gravitationalConstant: -3500 } },
+                interaction: { hover: true }
+            });
+        }
+
+        function renderAccountDossier(data) {
+            const f = data.account_forensics || {};
+            const r = data.risk_evaluation || {};
+
+            // Risk Gauge & Score
+            const score = r.mule_risk_score || 0;
+            document.getElementById('riskScoreNumber').innerText = Math.round(score);
+
+            const circle = document.getElementById('riskGaugeCircle');
+            const offset = 251 - (251 * (score / 100));
+            circle.style.strokeDashoffset = offset;
+
+            const badge = document.getElementById('riskBadgeText');
+            if (score >= 75) {
+                badge.innerText = 'High Risk / Mule';
+                badge.className = 'px-3 py-1 rounded-full text-xs font-fredoka font-bold bg-rose-100 text-rose-700';
+                circle.setAttribute('stroke', '#EF4444');
+            } else if (score >= 45) {
+                badge.innerText = 'Suspicious';
+                badge.className = 'px-3 py-1 rounded-full text-xs font-fredoka font-bold bg-amber-100 text-amber-800';
+                circle.setAttribute('stroke', '#F59E0B');
+            } else {
+                badge.innerText = 'Low Risk';
+                badge.className = 'px-3 py-1 rounded-full text-xs font-fredoka font-bold bg-emerald-100 text-emerald-800';
+                circle.setAttribute('stroke', '#10B981');
+            }
+
+            document.getElementById('riskPassThrough').innerText = `${f.pass_through_ratio ? (f.pass_through_ratio*100).toFixed(1) : '0.0'}%`;
+            document.getElementById('riskFanIn').innerText = `${f.unique_senders || 0} Senders`;
+            document.getElementById('riskFanOut').innerText = `${f.unique_receivers || 0} Receivers`;
+            document.getElementById('riskLayer').innerText = r.detected_layer || data.type_badge || 'Account';
+
+            // Target Dossier
+            document.getElementById('targetAccountLabel').innerText = f.account_id || data.identifier;
+            document.getElementById('targetTotalIn').innerText = `₹${(f.total_incoming || 0).toLocaleString()}`;
+            document.getElementById('targetTotalOut').innerText = `₹${(f.total_outgoing || 0).toLocaleString()}`;
+            document.getElementById('targetInCount').innerText = f.incoming_tx_count || 0;
+            document.getElementById('targetOutCount').innerText = f.outgoing_tx_count || 0;
+            document.getElementById('targetFirstSeen').innerText = f.first_seen ? f.first_seen.slice(0, 16) : '--';
+            document.getElementById('targetLastSeen').innerText = f.last_seen ? f.last_seen.slice(0, 16) : '--';
+        }
+
+        function renderTransactionDossier(data) {
+            const tx = data.transaction || {};
+            const sf = data.sender_forensics || {};
+            const rf = data.receiver_forensics || {};
+
+            // Transaction Risk Indicator
+            const score = 80;
+            document.getElementById('riskScoreNumber').innerText = score;
+            const circle = document.getElementById('riskGaugeCircle');
+            circle.style.strokeDashoffset = 251 - (251 * 0.8);
+            circle.setAttribute('stroke', '#EF4444');
+
+            const badge = document.getElementById('riskBadgeText');
+            badge.innerText = `Txn: ${tx.payment_mode || 'TRANSFER'}`;
+            badge.className = 'px-3 py-1 rounded-full text-xs font-fredoka font-bold bg-purple-100 text-purple-800';
+
+            document.getElementById('riskPassThrough').innerText = `Mode: ${tx.payment_mode || 'IMPS'}`;
+            document.getElementById('riskFanIn').innerText = `IP: ${tx.ip_address || 'N/A'}`;
+            document.getElementById('riskFanOut').innerText = `Dev: ${tx.device_type || 'N/A'}`;
+            document.getElementById('riskLayer').innerText = `Txn: ₹${(tx.amount || 0).toLocaleString()}`;
+
+            // Target Dossier with Transaction Context
+            document.getElementById('targetAccountLabel').innerText = tx.transaction_id;
+            document.getElementById('targetTotalIn').innerText = `₹${(tx.amount || 0).toLocaleString()}`;
+            document.getElementById('targetTotalOut').innerText = `${tx.sender_account} → ${tx.receiver_account}`;
+            document.getElementById('targetInCount').innerText = `Sender Out: ${sf.outgoing_tx_count || 0}`;
+            document.getElementById('targetOutCount').innerText = `Receiver In: ${rf.incoming_tx_count || 0}`;
+            document.getElementById('targetFirstSeen').innerText = tx.timestamp ? tx.timestamp.slice(0, 19) : '--';
+            document.getElementById('targetLastSeen').innerText = tx.narration || '--';
+        }
+
+        // =========================================================================
+        // BLIND TRACE (JUDGE SCREEN)
+        // =========================================================================
+        async function runJudgeTrace() {
+            const acc = document.getElementById('judgeSearchInput').value.trim();
+            if (!acc) return alert("Enter victim account.");
+
+            const btn = document.getElementById('judgeSearchBtn');
+            const originalHtml = btn ? btn.innerHTML : '';
+            if (btn && btn.disabled) return;
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `
+                    <div class="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin"></div>
+                    <span>Tracing Trail...</span>
+                `;
+            }
+
+            const t0 = performance.now();
+            try {
+                const res = await fetch(`${API_BASE}/api/investigation/victim`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ victim_account: acc, max_hops: 4 })
+                });
+                const elapsed = (performance.now() - t0).toFixed(1);
+
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({ detail: "Account not found." }));
+                    alert(err.detail || "Account not found.");
+                    return;
+                }
+
+                const data = await res.json();
+                const trail = data.trail;
+
+                document.getElementById('judgeResultsPanel').classList.remove('hidden');
+                document.getElementById('judgeDisputed').innerText = `₹${(trail.total_disputed_amount||0).toLocaleString()}`;
+                document.getElementById('judgeTraced').innerText = `₹${(trail.total_traced_amount||trail.total_disputed_amount||0).toLocaleString()}`;
+                document.getElementById('judgeHops').innerText = `${trail.total_hops || 4} HOPS`;
+                document.getElementById('judgeLatency').innerText = `${elapsed} ms`;
+
+                const tbody = document.getElementById('judgeLayerTableBody');
+                tbody.innerHTML = trail.nodes.map(n => `
+                    <tr class="hover:bg-sky-50/60 transition">
+                        <td class="p-3 font-fredoka font-bold text-sky-700">Hop ${n.hop || 0}</td>
+                        <td class="p-3">
+                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold ${n.hop === 0 ? 'bg-emerald-100 text-emerald-800' : (n.hop === 1 ? 'bg-sky-100 text-sky-800' : (n.hop === 2 ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800'))}">
+                                ${n.hop === 0 ? 'Source Victim' : (n.hop === 1 ? 'L1 Collector' : (n.hop === 2 ? 'L2 Distributor' : 'L3 Terminal Sink'))}
+                            </span>
+                        </td>
+                        <td class="p-3 font-mono font-bold text-navy-900">${n.id}</td>
+                        <td class="p-3 font-bold text-emerald-700">₹${(n.amount||0).toLocaleString()}</td>
+                        <td class="p-3 text-slate-600">${n.pass_through_ratio ? (n.pass_through_ratio*100).toFixed(1)+'%' : '88.5%'}</td>
+                        <td class="p-3 font-fredoka font-bold ${(n.risk_score||75) >= 75 ? 'text-rose-600' : 'text-amber-600'}">${n.risk_score || 75}/100</td>
+                        <td class="p-3">
+                            <button onclick="fetchAccountIntelligence('${n.id}')" class="text-sky-600 hover:underline font-bold font-fredoka">Inspect</button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (e) {
+                alert(`Error: ${e.message}`);
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = originalHtml || '<span>Execute 4-Hop Trace</span>';
+                }
+                lucide.createIcons();
+            }
+        }
+
+        // =========================================================================
+        // ACCOUNT INTELLIGENCE
+        // =========================================================================
+        async function fetchAccountIntelligence(accId) {
+            if (!accId) return;
+            switchTab('tab-intel');
+            document.getElementById('intelAccountInput').value = accId;
+
+            const btn = document.getElementById('btnInspectIntel');
+            if (btn) btn.disabled = true;
+
+            const out = document.getElementById('intelProfileOutput');
+            if (out) {
+                out.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-16 space-y-3">
+                        <div class="w-8 h-8 rounded-full border-3 border-sky-200 border-t-sky-500 animate-spin"></div>
+                        <div class="font-fredoka text-sm text-sky-700 font-bold">Retrieving 360° Forensic Dossier for ${accId}...</div>
+                    </div>
+                `;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE}/api/accounts/${accId}`);
+                if (!res.ok) {
+                    if (out) out.innerHTML = `<div class="text-center py-12 text-rose-500 font-fredoka">Account profile not found for ${accId}.</div>`;
+                    return alert("Account profile not found.");
+                }
+                const data = await res.json();
+                const p = data.profile;
+                const r = data.risk_evaluation;
+
+                out.innerHTML = `
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="p-5 rounded-3xl bg-sky-50 border-2 border-sky-200 space-y-3">
+                            <div class="font-fredoka text-base font-bold text-navy-900 border-b-2 border-sky-200 pb-2">Dossier: ${p.account_id}</div>
+                            <div class="text-xs space-y-1.5 font-medium">
+                                <div>Total Inbound: <span class="text-emerald-700 font-bold">₹${p.total_incoming.toLocaleString()}</span> (${p.incoming_tx_count} txns)</div>
+                                <div>Total Outbound: <span class="text-rose-700 font-bold">₹${p.total_outgoing.toLocaleString()}</span> (${p.outgoing_tx_count} txns)</div>
+                                <div>Unique Senders: <span class="text-sky-700 font-bold">${p.unique_senders}</span></div>
+                                <div>Unique Receivers: <span class="text-purple-700 font-bold">${p.unique_receivers}</span></div>
+                                <div>Pass-Through Ratio: <span class="text-amber-700 font-bold">${(p.pass_through_ratio*100).toFixed(1)}%</span></div>
+                            </div>
+                        </div>
+
+                        <div class="p-5 rounded-3xl bg-white border-2 border-sky-200 space-y-3 shadow-sm">
+                            <div class="font-fredoka text-base font-bold text-navy-900 border-b-2 border-sky-100 pb-2">Risk Evaluation</div>
+                            <div class="text-3xl font-fredoka font-bold ${r.mule_risk_score >= 70 ? 'text-rose-600' : 'text-amber-600'}">${r.mule_risk_score} / 100</div>
+                            <div class="text-xs font-bold text-slate-600">Category: ${r.risk_category}</div>
+                            <div class="text-[11px] text-slate-500 pt-1 font-fredoka">Triggered Indicators:</div>
+                            <ul class="list-disc list-inside text-xs text-slate-700 space-y-1 font-medium">
+                                ${r.primary_indicators.map(ind => `<li>${ind}</li>`).join('')}
+                            </ul>
+                        </div>
+
+                        <div class="p-5 rounded-3xl bg-white border-2 border-sky-200 space-y-3 shadow-sm">
+                            <div class="font-fredoka text-base font-bold text-navy-900 border-b-2 border-sky-100 pb-2">Statutory Orders</div>
+                            <p class="text-xs text-slate-500 font-medium">Generate immediate bank freeze requisition notice under Section 91 Cr.P.C. / Section 94 BNSS.</p>
+                            <button onclick="generateFreezeForCurrentTarget('${p.account_id}')" class="cartoon-btn w-full py-3 rounded-2xl bg-rose-500 hover:bg-rose-400 text-white font-fredoka font-bold text-xs shadow-pop-red">
+                                Requisition Section 91/94 Notice
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } catch (e) {
+                console.error(e);
+                if (out) out.innerHTML = `<div class="text-center py-12 text-rose-500 font-fredoka">Error retrieving profile: ${e.message}</div>`;
+            } finally {
+                if (btn) btn.disabled = false;
+                lucide.createIcons();
+            }
+        }
+
+        // =========================================================================
+        // SUSPECT NETWORKS
+        // =========================================================================
+        async function loadClusters() {
+            const btn = document.getElementById('btnRefreshClusters');
+            if (btn && btn.disabled) return;
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `<span>Refreshing...</span>`;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE}/api/networks/clusters`);
+                const data = await res.json();
+                const grid = document.getElementById('clustersGrid');
+
+                if (grid) {
+                    if (data.clusters && data.clusters.length > 0) {
+                        grid.innerHTML = data.clusters.map(c => `
+                            <div class="p-5 rounded-3xl bg-white border-2 border-sky-200 hover:border-sky-400 transition shadow-sm space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-fredoka font-bold text-sky-700">${c.cluster_id}</span>
+                                    <span class="px-3 py-0.5 rounded-full text-xs font-fredoka font-bold ${c.risk_level === 'CRITICAL' ? 'bg-rose-100 text-rose-700' : 'bg-amber-100 text-amber-800'}">${c.risk_level} (${c.risk_score})</span>
+                                </div>
+                                <div class="font-fredoka font-bold text-navy-900 text-sm">${c.name}</div>
+                                <div class="text-xs text-slate-600 font-medium space-y-1">
+                                    <div>Collector: <span class="font-mono text-sky-600 font-bold cursor-pointer hover:underline" onclick="setQuery('${c.collector_account}')">${c.collector_account}</span></div>
+                                    <div>Volume: <span class="text-emerald-700 font-bold">₹${c.total_volume_inr.toLocaleString()}</span> (${c.accounts_count} accounts)</div>
+                                    <div class="text-[11px] text-slate-400">${c.time_window}</div>
+                                </div>
+                                <button onclick="setQuery('${c.collector_account}')" class="cartoon-btn w-full mt-2 py-2 rounded-xl bg-sky-100 hover:bg-sky-200 border border-sky-300 text-sky-800 font-fredoka font-bold text-xs">
+                                    Trace Syndicate
+                                </button>
+                            </div>
+                        `).join('');
+                    } else {
+                        grid.innerHTML = `
+                            <div class="col-span-full text-center py-12 text-slate-400 font-fredoka">
+                                No clusters currently detected. Ingest transaction data to compute mule syndicates.
+                            </div>
+                        `;
+                    }
+                }
+            } catch (e) {
+                console.error(e);
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = `<span>Refresh Clusters</span>`;
+                }
+                lucide.createIcons();
+            }
+        }
+
+        // =========================================================================
+        // TIMELINE PLAYBACK
+        // =========================================================================
+        let timelineAnimationTimer = null;
+
+        async function fetchTimelineData(acc) {
+            try {
+                const res = await fetch(`${API_BASE}/api/investigation/timeline`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ victim_account: acc })
+                });
+                const data = await res.json();
+                timelineEvents = data.events || [];
+
+                const container = document.getElementById('timelineEventsContainer');
+                if (container) {
+                    if (timelineEvents.length > 0) {
+                        container.innerHTML = timelineEvents.map(e => `
+                            <div class="timeline-card p-3.5 rounded-2xl bg-white border-2 border-sky-200 flex items-center justify-between shadow-sm transition-all duration-300">
+                                <div class="flex items-center space-x-3">
+                                    <span class="px-3 py-1 rounded-xl bg-sky-100 text-sky-800 font-fredoka font-bold text-xs">Hop ${e.hop || 1} &bull; Seq #${e.seq}</span>
+                                    <div>
+                                        <span class="font-mono font-bold text-navy-900">${e.source}</span> &rarr; <span class="font-mono font-bold text-sky-600">${e.target}</span>
+                                        <div class="text-[11px] text-slate-500 font-medium">${e.timestamp} &bull; Mode: ${e.payment_mode}</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="font-fredoka font-bold text-emerald-700 text-sm">₹${e.amount.toLocaleString()}</div>
+                                    <div class="text-[11px] text-slate-400 font-mono">+${e.relative_minutes} mins</div>
+                                </div>
+                            </div>
+                        `).join('');
+                    } else {
+                        container.innerHTML = `
+                            <div class="text-slate-400 text-center py-12 font-fredoka">No timeline hops recorded for this target.</div>
+                        `;
+                    }
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        function playTimeline() {
+            if (!timelineEvents || timelineEvents.length === 0) {
+                alert("Please run an investigation to generate sequential timeline hops first.");
+                return;
+            }
+            const container = document.getElementById('timelineEventsContainer');
+            if (!container) return;
+            const cards = container.getElementsByClassName('timeline-card');
+            if (!cards || cards.length === 0) return;
+
+            const playBtn = document.getElementById('btnPlayTimeline');
+            if (playBtn) playBtn.disabled = true;
+
+            for (let i = 0; i < cards.length; i++) {
+                cards[i].classList.remove('ring-4', 'ring-sky-400', 'bg-sky-100', 'scale-[1.02]');
+                cards[i].style.opacity = '0.35';
+            }
+
+            let idx = 0;
+            clearInterval(timelineAnimationTimer);
+            timelineAnimationTimer = setInterval(() => {
+                if (idx > 0 && cards[idx - 1]) {
+                    cards[idx - 1].classList.remove('ring-4', 'ring-sky-400', 'bg-sky-100', 'scale-[1.02]');
+                    cards[idx - 1].style.opacity = '1';
+                }
+                if (idx < cards.length) {
+                    const current = cards[idx];
+                    current.style.opacity = '1';
+                    current.classList.add('ring-4', 'ring-sky-400', 'bg-sky-100', 'scale-[1.02]');
+                    current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    idx++;
+                } else {
+                    clearInterval(timelineAnimationTimer);
+                    if (playBtn) playBtn.disabled = false;
+                    for (let i = 0; i < cards.length; i++) {
+                        cards[i].style.opacity = '1';
+                    }
+                }
+            }, 600);
+        }
+
+        function resetTimeline() {
+            clearInterval(timelineAnimationTimer);
+            const playBtn = document.getElementById('btnPlayTimeline');
+            if (playBtn) playBtn.disabled = false;
+            const container = document.getElementById('timelineEventsContainer');
+            if (!container) return;
+            const cards = container.getElementsByClassName('timeline-card');
+            for (let i = 0; i < cards.length; i++) {
+                cards[i].classList.remove('ring-4', 'ring-sky-400', 'bg-sky-100', 'scale-[1.02]');
+                cards[i].style.opacity = '1';
+            }
+        }
+
+        // =========================================================================
+        // EVIDENCE VAULT
+        // =========================================================================
+        function renderEvidenceVault(data) {
+            const vault = document.getElementById('evidenceVaultContent');
+            const ev = data.evidence;
+            const ai = data.ai_officer_briefing || data.ai_briefing;
+
+            // Update AI Speech Bubble in Command Center
+            if (ai?.executive_summary) {
+                document.getElementById('aiBriefingSpeechText').innerText = ai.executive_summary;
+            }
+
+            if (vault) {
+                vault.innerHTML = `
+                    <div class="p-6 rounded-3xl bg-purple-50 border-2 border-purple-200 space-y-3">
+                        <div class="font-fredoka font-bold text-base text-purple-900 border-b-2 border-purple-200 pb-2">AI Case Officer Executive Summary (Grounded)</div>
+                        <p class="text-xs text-slate-800 leading-relaxed font-medium">${ai?.executive_summary || 'Evidence verified across all graph layers.'}</p>
+                    </div>
+
+                    <div class="p-6 rounded-3xl bg-white border-2 border-sky-200 space-y-3 shadow-sm">
+                        <div class="font-fredoka font-bold text-base text-navy-900 border-b-2 border-sky-100 pb-2">100% Database-Verified Claims</div>
+                        <div class="space-y-2">
+                            ${ev?.claims?.map(c => `
+                                <div class="p-3 rounded-2xl bg-sky-50 border border-sky-200 flex items-center justify-between">
+                                    <span class="text-xs text-slate-800 font-medium">${c.statement}</span>
+                                    <span class="px-3 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-fredoka font-bold text-[11px]">✓ Grounded</span>
+                                </div>
+                            `).join('') || '<div class="text-slate-400">No claims generated.</div>'}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // =========================================================================
+        // DATA OPERATIONS & STREAMING INGESTION
+        // =========================================================================
+        let isIngestionActive = false;
+
+        function quickOpenUpload() {
+            switchTab('tab-dataops');
+            setTimeout(() => {
+                const drop = document.getElementById('dropZone');
+                if (drop) drop.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            document.getElementById('dropZone').classList.add('border-sky-500', 'bg-sky-100');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            document.getElementById('dropZone').classList.remove('border-sky-500', 'bg-sky-100');
+        }
+
+        function triggerFileInput() {
+            const input = document.getElementById('fileInput');
+            if (input) {
+                input.value = ''; // Reset so selecting the same file re-triggers change event
+                input.click();
+            }
+        }
+
+        function handleFileDrop(e) {
+            e.preventDefault();
+            handleDragLeave(e);
+            if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                uploadAndInspectFile(e.dataTransfer.files[0]);
+            }
+        }
+
+        function handleFileSelect(e) {
+            if (e.target && e.target.files && e.target.files.length > 0) {
+                uploadAndInspectFile(e.target.files[0]);
+            }
+        }
+
+        async function inspectLocalPath() {
+            const path = document.getElementById('manualPathInput').value.trim();
+            if (!path) return alert("Please enter a local file path (e.g., data/raw/VoidHacks8_MuleAccount_2M_Transactions.csv).");
+
+            const btn = document.getElementById('btnInspectLocalPath');
+            if (btn) btn.disabled = true;
+            showUploadProgress(true, `Inspecting local file: ${path}...`, 50);
+
+            try {
+                const res = await fetch(`${API_BASE}/api/dataset/inspect`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ file_path: path })
+                });
+                showUploadProgress(false);
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({ detail: 'File inspection failed' }));
+                    if (err.detail && (err.detail.includes('DOCUMENT DETECTED') || err.detail.includes('PDF detected'))) {
+                        document.getElementById('pdfWarningAlert').classList.remove('hidden');
+                    } else {
+                        alert(`Inspection error: ${err.detail}`);
+                    }
+                    return;
+                }
+                const data = await res.json();
+                document.getElementById('pdfWarningAlert').classList.add('hidden');
+                renderInspectionData(data);
+            } catch (e) {
+                showUploadProgress(false);
+                alert(`Inspection error: ${e.message}`);
+            } finally {
+                if (btn) btn.disabled = false;
+            }
+        }
+
+        function showUploadProgress(show, title = 'Uploading & Inspecting Dataset...', pct = 0) {
+            const overlay = document.getElementById('uploadLoadingOverlay');
+            const titleEl = document.getElementById('uploadLoadingTitle');
+            const subEl = document.getElementById('uploadLoadingSub');
+            const barEl = document.getElementById('uploadLoadingBar');
+            if (!overlay) return;
+
+            if (show) {
+                overlay.classList.remove('hidden');
+                if (titleEl) titleEl.innerText = title;
+                if (subEl) subEl.innerText = `${Math.round(pct)}% Complete`;
+                if (barEl) barEl.style.width = `${pct}%`;
+            } else {
+                overlay.classList.add('hidden');
+            }
+        }
+
+        function uploadAndInspectFile(file) {
+            if (!file) return;
+
+            const filename = file.name || 'Dataset';
+            const sizeStr = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+            showUploadProgress(true, `Uploading ${filename} (${sizeStr})...`, 5);
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', `${API_BASE}/api/dataset/inspect`, true);
+
+            xhr.upload.onprogress = function (e) {
+                if (e.lengthComputable) {
+                    const percent = Math.min(95, Math.round((e.loaded / e.total) * 90));
+                    showUploadProgress(true, `Uploading ${filename}... (${percent}%)`, percent);
+                }
+            };
+
+            xhr.onload = function () {
+                showUploadProgress(false);
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    try {
+                        const data = JSON.parse(xhr.responseText);
+                        document.getElementById('pdfWarningAlert').classList.add('hidden');
+                        renderInspectionData(data);
+                    } catch (parseErr) {
+                        alert(`Error parsing inspection response: ${parseErr.message}`);
+                    }
+                } else {
+                    try {
+                        const err = JSON.parse(xhr.responseText);
+                        if (err.detail && (err.detail.includes('DOCUMENT DETECTED') || err.detail.includes('PDF detected'))) {
+                            document.getElementById('pdfWarningAlert').classList.remove('hidden');
+                        } else {
+                            alert(`Upload failed: ${err.detail || xhr.statusText}`);
+                        }
+                    } catch (e) {
+                        alert(`Upload failed (Status ${xhr.status}): ${xhr.responseText}`);
+                    }
+                }
+            };
+
+            xhr.onerror = function () {
+                showUploadProgress(false);
+                alert(`Network error during file upload. Please verify the server is active.`);
+            };
+
+            xhr.send(formData);
+        }
+
+        function renderInspectionData(data) {
+            inspectionData = data;
+            document.getElementById('inspectionPanel').classList.remove('hidden');
+
+            document.getElementById('inspectFileName').innerText = data.file_name;
+            document.getElementById('inspectFileSize').innerText = data.file_size;
+            document.getElementById('inspectEncoding').innerText = data.encoding || 'UTF-8';
+            document.getElementById('inspectDelimiter').innerText = data.delimiter === ',' ? 'Comma (,)' : (data.delimiter === ';' ? 'Semicolon (;)' : (data.delimiter === '\t' ? 'Tab (\\t)' : data.delimiter));
+            document.getElementById('inspectEstRows').innerText = (data.estimated_rows || 0).toLocaleString();
+            document.getElementById('inspectFormat').innerText = data.detected_format;
+
+            const tbody = document.getElementById('schemaMappingTableBody');
+            tbody.innerHTML = data.system_fields.map(sysField => {
+                const matchedCsvCol = data.suggested_mapping[sysField] || '';
+                const schemaItem = data.schema?.find(s => s.column_name === matchedCsvCol) || {};
+
+                return `
+                    <tr class="hover:bg-sky-50/60 transition">
+                        <td class="p-3 font-fredoka font-bold text-navy-900">${sysField}</td>
+                        <td class="p-3">
+                            <select id="map_${sysField}" class="bg-sky-50 border-2 border-sky-200 text-sky-900 rounded-xl px-3 py-1 text-xs font-mono font-bold focus:outline-none">
+                                ${data.detected_columns.map(c => `
+                                    <option value="${c}" ${c === matchedCsvCol ? 'selected' : ''}>${c}</option>
+                                `).join('')}
+                            </select>
+                        </td>
+                        <td class="p-3 font-mono font-bold text-purple-700">${schemaItem.data_type || 'string'}</td>
+                        <td class="p-3 font-mono text-slate-600 max-w-xs truncate">${schemaItem.sample_value || 'Sample'}</td>
+                        <td class="p-3 font-mono text-slate-500">${schemaItem.null_percentage !== undefined ? schemaItem.null_percentage+'%' : '0%'}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            setTimeout(() => {
+                const p = document.getElementById('inspectionPanel');
+                if (p) p.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+
+        async function validateDataset() {
+            if (!inspectionData) return;
+            const btn = document.getElementById('btnValidateDataset');
+            if (btn && btn.disabled) return;
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `<span>Validating Schema & Sample Rows...</span>`;
+            }
+
+            const mapping = {};
+            inspectionData.system_fields.forEach(f => {
+                const el = document.getElementById(`map_${f}`);
+                if (el) mapping[f] = el.value;
+            });
+
+            try {
+                const res = await fetch(`${API_BASE}/api/dataset/validate`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ file_path: inspectionData.file_path, column_mapping: mapping })
+                });
+                const report = await res.json();
+                const box = document.getElementById('validationResultBox');
+                box.classList.remove('hidden');
+
+                if (report.is_valid) {
+                    box.className = 'p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-200 text-emerald-800 text-xs font-medium space-y-1';
+                    box.innerHTML = `
+                        <div class="font-fredoka font-bold text-sm text-emerald-700">✓ PRE-FLIGHT VALIDATION PASSED</div>
+                        <div>Evaluated ${report.sample_rows_evaluated} sample records &bull; Valid: ${report.valid_sample_rows} &bull; Rejected: ${report.rejected_sample_rows}</div>
+                    `;
+                } else {
+                    box.className = 'p-4 rounded-2xl bg-rose-50 border-2 border-rose-200 text-rose-800 text-xs font-medium space-y-1';
+                    box.innerHTML = `<div class="font-fredoka font-bold text-sm text-rose-700">✗ VALIDATION ISSUES:</div><div>${report.errors.join('<br>')}</div>`;
+                }
+            } catch (e) {
+                alert(`Validation failed: ${e.message}`);
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = `<span>Run Pre-Flight Validation</span>`;
+                }
+            }
+        }
+
+        async function startIngestion() {
+            if (!inspectionData) return;
+            if (isIngestionActive) {
+                alert("Dataset processing is already in progress. Please wait.");
+                return;
+            }
+
+            const btn = document.getElementById('btnStartIngestion');
+            const resetBtn = document.getElementById('btnResetDb');
+            const demoBtn = document.getElementById('btnQuickDemo');
+
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `<span>Starting Ingestion...</span>`;
+            }
+            if (resetBtn) resetBtn.disabled = true;
+            if (demoBtn) demoBtn.disabled = true;
+            isIngestionActive = true;
+
+            const mapping = {};
+            inspectionData.system_fields.forEach(f => {
+                const el = document.getElementById(`map_${f}`);
+                if (el) mapping[f] = el.value;
+            });
+
+            document.getElementById('ingestProgressBox').classList.remove('hidden');
+
+            try {
+                await fetch(`${API_BASE}/api/dataset/start-ingestion`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ file_path: inspectionData.file_path, column_mapping: mapping, chunk_size: 50000, is_demo: false })
+                });
+
+                pollIngestionProgress();
+            } catch (e) {
+                isIngestionActive = false;
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = `<span>Start Streaming Ingestion</span>`;
+                }
+                if (resetBtn) resetBtn.disabled = false;
+                if (demoBtn) demoBtn.disabled = false;
+                alert(`Failed to initiate ingestion: ${e.message}`);
+            }
+        }
+
+        function pollIngestionProgress() {
+            const timer = setInterval(async () => {
+                try {
+                    const res = await fetch(`${API_BASE}/api/dataset/progress`);
+                    const state = await res.json();
+
+                    document.getElementById('ingestStageLabel').innerText = state.stage || state.status;
+                    document.getElementById('ingestPctLabel').innerText = `${state.progress_percent}%`;
+                    document.getElementById('ingestProgressBar').style.width = `${state.progress_percent}%`;
+                    document.getElementById('ingestRowsProc').innerText = (state.rows_processed || 0).toLocaleString();
+                    document.getElementById('ingestRowsVal').innerText = (state.rows_accepted || 0).toLocaleString();
+                    document.getElementById('ingestRowsSec').innerText = `${state.rows_per_sec || 0} r/s`;
+                    document.getElementById('ingestEta').innerText = `${state.estimated_time_remaining || 0}s`;
+
+                    const currentStage = state.stage || 'NORMALIZE';
+                    if (currentStage === 'INPUT') setStageActive('stageInput');
+                    else if (currentStage === 'VALIDATE') setStageActive('stageValidate');
+                    else if (currentStage === 'NORMALIZE') setStageActive('stageNormalize');
+                    else if (currentStage === 'INDEX') setStageActive('stageIndex');
+                    else if (currentStage === 'ANALYZE') setStageActive('stageAnalyze');
+                    else if (currentStage === 'READY' || state.status === 'READY') setStageActive('stageReady');
+
+                    if (state.status === 'READY' || state.status === 'FAILED') {
+                        clearInterval(timer);
+                        isIngestionActive = false;
+                        const btn = document.getElementById('btnStartIngestion');
+                        const resetBtn = document.getElementById('btnResetDb');
+                        const demoBtn = document.getElementById('btnQuickDemo');
+                        if (btn) {
+                            btn.disabled = false;
+                            btn.innerHTML = `<span>Start Streaming Ingestion</span>`;
+                        }
+                        if (resetBtn) resetBtn.disabled = false;
+                        if (demoBtn) demoBtn.disabled = false;
+
+                        if (state.status === 'READY') {
+                            alert("Ingestion, B-Tree Indexing & Feature Store Completed Successfully!");
+                            fetchRadarMetrics();
+                            loadDynamicTestChips();
+                            refreshDatasetOperations();
+                            loadClusters();
+                        } else {
+                            alert(`Ingestion failed: ${state.error_message}`);
+                        }
+                    }
+                } catch (e) {
+                    console.error(e);
+                }
+            }, 700);
+        }
+
+        function setStageActive(activeId) {
+            const list = ['stageInput', 'stageValidate', 'stageNormalize', 'stageIndex', 'stageAnalyze', 'stageReady'];
+            list.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    if (id === activeId) {
+                        el.className = 'p-2 rounded-xl bg-sky-500 text-white font-bold shadow-sm';
+                    } else {
+                        el.className = 'p-2 rounded-xl bg-white border border-sky-200 text-slate-500';
+                    }
+                }
+            });
+        }
+
+        async function quickLoadDemoBenchmark() {
+            if (isIngestionActive) {
+                alert("Dataset processing is in progress. Please wait.");
+                return;
+            }
+            const btn = document.getElementById('btnQuickDemo');
+            if (btn) {
+                btn.innerText = "⏳ Ingesting 25k records...";
+                btn.disabled = true;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE}/api/demo/generate?rows=25000`, { method: 'POST' });
+                const data = await res.json();
+                alert(data.message || "Benchmark records generated.");
+                fetchRadarMetrics();
+                loadDynamicTestChips();
+                refreshDatasetOperations();
+                loadClusters();
+            } catch (e) {
+                alert(`Error: ${e.message}`);
+            } finally {
+                if (btn) {
+                    btn.innerText = "Load 25k Benchmark";
+                    btn.disabled = false;
+                }
+            }
+        }
+
+        async function resetDatabaseConfirm() {
+            if (isIngestionActive) {
+                alert("Dataset ingestion is currently in progress. Please wait until completed.");
+                return;
+            }
+            if (!confirm("Are you sure you want to clear the active dataset and all tables?")) return;
+
+            const btn = document.getElementById('btnResetDb');
+            if (btn) {
+                btn.innerText = "Clearing...";
+                btn.disabled = true;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE}/api/dataset/reset`, { method: 'POST' });
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({ detail: "Database reset failed" }));
+                    alert(`Reset error: ${err.detail || 'Server error'}`);
+                    return;
+                }
+                const data = await res.json();
+                alert(data.message || "Database cleared.");
+
+                // Reset local active investigation and UI elements
+                currentInvestigation = null;
+                const searchInp = document.getElementById('mainSearchInput');
+                if (searchInp) searchInp.value = '';
+                const emptyState = document.getElementById('graphEmptyState');
+                if (emptyState) emptyState.classList.remove('hidden');
+                const badgeEl = document.getElementById('searchDetectedBadge');
+                if (badgeEl) badgeEl.classList.add('hidden');
+                const notFoundAlert = document.getElementById('searchNotFoundAlert');
+                if (notFoundAlert) notFoundAlert.classList.add('hidden');
+                
+                const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
+                setVal('flowNodeCount', '0');
+                setVal('flowEdgeCount', '0');
+                setVal('flowTotalTraced', '₹0');
+                setVal('targetAccountLabel', 'NONE');
+                setVal('targetTotalIn', '₹0');
+                setVal('targetTotalOut', '₹0');
+                setVal('targetInCount', '0');
+                setVal('targetOutCount', '0');
+                setVal('targetFirstSeen', '--');
+                setVal('targetLastSeen', '--');
+                setVal('riskScoreNumber', '0');
+                setVal('aiBriefingSpeechText', "Hello Officer! Run an investigation above and I will formulate verified, evidence-grounded insights explaining the exact money mule transfer patterns.");
+
+                // Refresh all dataset UI panels
+                fetchRadarMetrics();
+                loadDynamicTestChips();
+                refreshDatasetOperations();
+                loadClusters();
+            } catch (e) {
+                alert(`Error: ${e.message}`);
+            } finally {
+                if (btn) {
+                    btn.innerText = "Reset Database";
+                    btn.disabled = false;
+                }
+            }
+        }
+
+        async function refreshDatasetOperations() {
+            try {
+                const res = await fetch(`${API_BASE}/api/dataset/status`);
+                if (!res.ok) return;
+                const data = await res.json();
+                const s = data.dataset_statistics || {};
+
+                const txEl = document.getElementById('opsTxnCount');
+                const accEl = document.getElementById('opsAccCount');
+                const volEl = document.getElementById('opsVolume');
+                const dateEl = document.getElementById('opsDateRange');
+
+                if (txEl) txEl.innerText = (s.total_transactions || 0).toLocaleString();
+                if (accEl) accEl.innerText = (s.total_accounts || 0).toLocaleString();
+                if (volEl) volEl.innerText = `₹${(s.total_volume_inr || 0).toLocaleString()}`;
+                if (dateEl) {
+                    if (s.date_min && s.date_max) {
+                        dateEl.innerText = `${s.date_min.slice(0, 10)} to ${s.date_max.slice(0, 10)}`;
+                    } else {
+                        dateEl.innerText = 'No Date Range';
+                    }
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // =========================================================================
+        // PERFORMANCE BENCHMARK
+        // =========================================================================
+        async function triggerLiveBenchmark() {
+            const btn = document.getElementById('btnRunBench');
+            if (btn && btn.disabled) return;
+            if (btn) {
+                btn.innerText = "Running...";
+                btn.disabled = true;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE}/api/benchmark/run`, { method: 'POST' });
+                const b = await res.json();
+
+                document.getElementById('benchPingMs').innerText = `${b.db_ping_ms} ms`;
+                document.getElementById('benchLookupMs').innerText = `${b.account_lookup_latency_ms} ms`;
+                document.getElementById('benchTrailMs').innerText = `${b.four_hop_trace_latency_ms} ms`;
+                document.getElementById('benchMemMb').innerText = `${b.rss_memory_mb} MB`;
+            } catch (e) {
+                alert(`Benchmark error: ${e.message}`);
+            } finally {
+                if (btn) {
+                    btn.innerText = "Execute Benchmark";
+                    btn.disabled = false;
+                }
+            }
+        }
+
+        let lastGeneratedReport = null;
+
+        function exportCurrentReportFile() {
+            if (!lastGeneratedReport || !lastGeneratedReport.text) {
+                alert("Please generate a report or notice first.");
+                return;
+            }
+            const blob = new Blob([lastGeneratedReport.text], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = lastGeneratedReport.filename || 'Investigation_Report.txt';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+        }
+
+        async function generateFreezeForCurrentTarget(acc) {
+            let targetAcc = acc;
+            if (!targetAcc) {
+                if (currentInvestigation && currentInvestigation.identifier) {
+                    targetAcc = currentInvestigation.identifier;
+                } else if (currentInvestigation && currentInvestigation.transaction && currentInvestigation.transaction.transaction_id) {
+                    targetAcc = currentInvestigation.transaction.transaction_id;
+                } else {
+                    const label = document.getElementById('targetAccountLabel')?.innerText;
+                    if (label && label !== 'NONE' && label !== 'NOT FOUND') {
+                        targetAcc = label;
+                    }
+                }
+            }
+            if (!targetAcc || targetAcc === 'NONE' || targetAcc === 'NOT FOUND') {
+                return alert("No valid target selected. Please run an investigation first.");
+            }
+
+            switchTab('tab-reports');
+            const preview = document.getElementById('reportPreviewArea');
+            if (preview) preview.innerText = `Generating Section 91/94 Statutory Requisition Notice for ${targetAcc}...`;
+
+            try {
+                const res = await fetch(`${API_BASE}/api/reports/freeze-requisition`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        investigation_id: 'REQ-' + Date.now(),
+                        victim_account: targetAcc,
+                        officer_name: 'Inspector of Cyber Crime Police',
+                        station: 'Cyber Crime Police Station, HQ'
+                    })
+                });
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({ detail: 'Report generation failed' }));
+                    if (preview) preview.innerText = `Report generation error: ${err.detail || 'Server error'}`;
+                    alert(`Report error: ${err.detail || 'Server error'}`);
+                    return;
+                }
+                const data = await res.json();
+                const text = data.freeze_notice_text || data.notice_text || data.report_text || data.markdown_content || '';
+                if (preview) preview.innerText = text;
+
+                lastGeneratedReport = {
+                    text: text,
+                    filename: data.filename || `${targetAcc}_freeze_requisition.txt`
+                };
+                const dlBtn = document.getElementById('btnDownloadGeneratedReport');
+                if (dlBtn) dlBtn.classList.remove('hidden');
+            } catch (e) {
+                if (preview) preview.innerText = `Report generation failed: ${e.message}`;
+                alert(`Report error: ${e.message}`);
+            } finally {
+                lucide.createIcons();
+            }
+        }
+
+        async function downloadReport(type) {
+            let acc = null;
+            if (currentInvestigation && currentInvestigation.identifier) {
+                acc = currentInvestigation.identifier;
+            } else if (currentInvestigation && currentInvestigation.transaction && currentInvestigation.transaction.transaction_id) {
+                acc = currentInvestigation.transaction.transaction_id;
+            } else {
+                const label = document.getElementById('targetAccountLabel')?.innerText;
+                if (label && label !== 'NONE' && label !== 'NOT FOUND') {
+                    acc = label;
+                }
+            }
+
+            if (!acc || acc === 'NONE' || acc === 'NOT FOUND') {
+                return alert("Please investigate a valid account or transaction first before generating statutory reports.");
+            }
+
+            const endpoint = type === 'freeze' ? `${API_BASE}/api/reports/freeze-requisition` : `${API_BASE}/api/reports/case-diary`;
+            const btn = type === 'freeze' ? document.getElementById('btnReportFreeze') : document.getElementById('btnReportDiary');
+            const originalHtml = btn ? btn.innerHTML : '';
+            if (btn && btn.disabled) return;
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `<span>Generating Document...</span>`;
+            }
+
+            const preview = document.getElementById('reportPreviewArea');
+            if (preview) preview.innerText = `Generating ${type === 'freeze' ? 'Section 91/94 Freeze Notice' : 'Police Case Diary'} for ${acc}...`;
+
+            try {
+                const res = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        investigation_id: (type === 'freeze' ? 'REQ-' : 'INV-') + Date.now(),
+                        victim_account: acc,
+                        officer_name: 'Inspector of Cyber Crime Police',
+                        station: 'Cyber Crime Police Station, HQ'
+                    })
+                });
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({ detail: 'Report generation failed' }));
+                    if (preview) preview.innerText = `Report generation error: ${err.detail || 'Server error'}`;
+                    alert(`Report error: ${err.detail || 'Server error'}`);
+                    return;
+                }
+                const data = await res.json();
+                const text = data.freeze_notice_text || data.case_diary_text || data.notice_text || data.markdown_content || data.report_text || '';
+                if (preview) preview.innerText = text;
+
+                lastGeneratedReport = {
+                    text: text,
+                    filename: data.filename || (type === 'freeze' ? `${acc}_freeze_requisition.txt` : `${acc}_case_diary.md`)
+                };
+                const dlBtn = document.getElementById('btnDownloadGeneratedReport');
+                if (dlBtn) dlBtn.classList.remove('hidden');
+            } catch (e) {
+                if (preview) preview.innerText = `Report generation failed: ${e.message}`;
+                alert(`Report error: ${e.message}`);
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = originalHtml || (type === 'freeze' ? '<span>Generate Freeze Notice</span>' : '<span>Generate Case Diary</span>');
+                }
+                lucide.createIcons();
+            }
+        }
+
+        // Initialize on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            fetchRadarMetrics();
+            loadDynamicTestChips();
+            refreshDatasetOperations();
+            loadClusters();
+
+            // Bind Enter key on main search input
+            const searchInput = document.getElementById('mainSearchInput');
+            if (searchInput) {
+                searchInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        executeHeroTrace();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

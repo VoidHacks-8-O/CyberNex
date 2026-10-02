@@ -1,0 +1,90 @@
+
+========================================================================================
+             FORM FOR REQUISITION OF BANK ACCOUNT FREEZE / LIEN
+           UNDER SECTION 91 Cr.P.C. / SECTION 94 BHARATIYA NAGARIK SURAKSHA SANHITA (BNSS)
+========================================================================================
+
+[DRAFT FOR AUTHORIZED POLICE / LAW ENFORCEMENT OFFICER REVIEW]
+
+Date: 02/10/2026
+Ref / Investigation ID: INV-D33E53B2
+
+TO:
+The Nodal Officer / Fraud Risk Management Team,
+Concerned Banking Institutions & Payment Aggregators.
+
+SUBJECT: 
+URGENT: Requisition for debit freeze / marking of lien on beneficiary money mule accounts
+under Section 91 Cr.P.C. / Section 94 BNSS in connection with cyber fraud investigation.
+
+Sir / Madam,
+
+1. WHEREAS an investigation has been registered regarding cyber fraud originating from 
+   complainant account: PUNB10000428.
+
+2. AND WHEREAS digital forensics analysis reveals that defrauded funds totaling ₹1,021,016.87 
+   were illicitly moved through multi-layered mule networks to the following target beneficiary accounts:
+
+
+| 1 | `SBIN10000772` | `LAYER_1_COLLECTOR` | ₹368,754.26 | 37.0/100 | 96.0% funds dispersed within median 14.2 mins.; Operating fr... |
+| 2 | `KKBK10000460` | `LAYER_1_COLLECTOR` | ₹65,313.78 | 37.0/100 | 96.0% funds dispersed within median 15.5 mins.; Operating fr... |
+| 3 | `IPOS10001063` | `LAYER_1_COLLECTOR` | ₹49,395.71 | 37.0/100 | 96.0% funds dispersed within median 19.1 mins.; Operating fr... |
+| 4 | `IPOS10000455` | `LAYER_1_COLLECTOR` | ₹159,563.52 | 37.0/100 | 96.0% funds dispersed within median 15.9 mins.; Operating fr... |
+| 5 | `AXIS10000588` | `LAYER_1_COLLECTOR` | ₹170,049.43 | 37.0/100 | 96.0% funds dispersed within median 21.2 mins.; Operating fr... |
+| 6 | `IPOS10000884` | `LAYER_1_COLLECTOR` | ₹10,498.69 | 37.0/100 | 96.0% funds dispersed within median 16.6 mins.; Operating fr... |
+| 7 | `SBIN10001061` | `LAYER_1_COLLECTOR` | ₹15,708.57 | 37.0/100 | 96.0% funds dispersed within median 27.3 mins.; Operating fr... |
+| 8 | `AIRP10001054` | `LAYER_1_COLLECTOR` | ₹1,206.51 | 37.0/100 | 96.0% funds dispersed within median 13.4 mins.; Operating fr... |
+| 9 | `ICIC10000487` | `LAYER_1_COLLECTOR` | ₹25,989.31 | 37.0/100 | 96.0% funds dispersed within median 22.3 mins.; Operating fr... |
+| 10 | `HDFC10000907` | `LAYER_1_COLLECTOR` | ₹10,967.06 | 37.0/100 | 96.0% funds dispersed within median 9.1 mins.; Operating fro... |
+| 11 | `ICIC10000920` | `LAYER_1_COLLECTOR` | ₹14,962.75 | 37.0/100 | 96.0% funds dispersed within median 24.2 mins.; Operating fr... |
+| 12 | `ICIC10000810` | `LAYER_1_COLLECTOR` | ₹56,002.98 | 37.0/100 | 96.0% funds dispersed within median 17.2 mins.; Operating fr... |
+| 13 | `PUNB10000709` | `LAYER_1_COLLECTOR` | ₹31,594.32 | 37.0/100 | 96.0% funds dispersed within median 21.0 mins.; Operating fr... |
+| 14 | `PYTM10000635` | `LAYER_1_COLLECTOR` | ₹37,898.85 | 37.0/100 | 96.0% funds dispersed within median 23.9 mins.; Operating fr... |
+| 15 | `IPOS10000546` | `LAYER_1_COLLECTOR` | ₹3,111.13 | 37.0/100 | 96.0% funds dispersed within median 16.1 mins.; Operating fr... |
+| 16 | `ICIC10001494` | `LAYER_2_DISTRIBUTOR` | ₹354,004.09 | 27.0/100 | Aggregated funds from 5 distinct senders.; Operating from au... |
+| 17 | `PUNB10001249` | `LAYER_2_DISTRIBUTOR` | ₹62,365.09 | 27.0/100 | Aggregated funds from 5 distinct senders.; Operating from au... |
+| 18 | `AXIS10001182` | `LAYER_2_DISTRIBUTOR` | ₹62,701.23 | 27.0/100 | Aggregated funds from 4 distinct senders.; Operating from au... |
+| 19 | `AXIS10001196` | `LAYER_2_DISTRIBUTOR` | ₹27,294.94 | 27.0/100 | Aggregated funds from 5 distinct senders.; Operating from au... |
+| 20 | `AIRP10001437` | `LAYER_2_DISTRIBUTOR` | ₹47,419.88 | 27.0/100 | Aggregated funds from 9 distinct senders.; Operating from au... |
+| 21 | `AXIS10001119` | `LAYER_2_DISTRIBUTOR` | ₹28,426.65 | 27.0/100 | Aggregated funds from 3 distinct senders.; Operating from au... |
+| 22 | `IPOS10001169` | `LAYER_2_DISTRIBUTOR` | ₹153,180.97 | 27.0/100 | Aggregated funds from 3 distinct senders.; Operating from au... |
+| 23 | `BARB10001325` | `LAYER_2_DISTRIBUTOR` | ₹40,133.19 | 27.0/100 | Aggregated funds from 3 distinct senders.; Operating from au... |
+| 24 | `HDFC10001336` | `LAYER_2_DISTRIBUTOR` | ₹163,247.45 | 27.0/100 | Aggregated funds from 3 distinct senders.; Operating from au... |
+| 25 | `AIRP10001291` | `LAYER_2_DISTRIBUTOR` | ₹93,820.41 | 27.0/100 | Aggregated funds from 3 distinct senders.; Operating from au... |
+| 26 | `BARB10001376` | `LAYER_2_DISTRIBUTOR` | ₹10,078.75 | 27.0/100 | Aggregated funds from 3 distinct senders.; Operating from au... |
+| 27 | `IPOS10001496` | `LAYER_2_DISTRIBUTOR` | ₹48,911.32 | 27.0/100 | Aggregated funds from 3 distinct senders.; Operating from au... |
+| 28 | `SBIN10001368` | `LAYER_2_DISTRIBUTOR` | ₹15,080.22 | 27.0/100 | Aggregated funds from 5 distinct senders.; Operating from au... |
+| 29 | `KKBK10001117` | `LAYER_2_DISTRIBUTOR` | ₹5,660.47 | 27.0/100 | Aggregated funds from 6 distinct senders.; Operating from au... |
+| 30 | `IPOS10001165` | `LAYER_2_DISTRIBUTOR` | ₹1,158.25 | 27.0/100 | Aggregated funds from 4 distinct senders.; Operating from au... |
+| 31 | `AIRP10001252` | `LAYER_2_DISTRIBUTOR` | ₹24,949.74 | 27.0/100 | Aggregated funds from 6 distinct senders.; Operating from au... |
+| 32 | `ICIC10001248` | `LAYER_2_DISTRIBUTOR` | ₹100,310.72 | 27.0/100 | Aggregated funds from 5 distinct senders.; Operating from au... |
+| 33 | `HDFC10001251` | `LAYER_2_DISTRIBUTOR` | ₹10,528.37 | 27.0/100 | Aggregated funds from 3 distinct senders.; Operating from au... |
+| 34 | `HDFC10001161` | `LAYER_2_DISTRIBUTOR` | ₹41,351.04 | 27.0/100 | Aggregated funds from 3 distinct senders.; Operating from au... |
+| 35 | `AIRP10001422` | `LAYER_2_DISTRIBUTOR` | ₹2,567.51 | 27.0/100 | Aggregated funds from 6 distinct senders.; Operating from au... |
+| 36 | `AIRP10001176` | `LAYER_2_DISTRIBUTOR` | ₹14,364.24 | 27.0/100 | Aggregated funds from 7 distinct senders.; Operating from au... |
+| 37 | `IPOS10001205` | `LAYER_2_DISTRIBUTOR` | ₹53,762.86 | 27.0/100 | Aggregated funds from 9 distinct senders.; Operating from au... |
+| 38 | `PYTM10001283` | `LAYER_2_DISTRIBUTOR` | ₹30,330.55 | 27.0/100 | Aggregated funds from 5 distinct senders.; Operating from au... |
+| 39 | `AXIS10001493` | `LAYER_2_DISTRIBUTOR` | ₹15,194.41 | 27.0/100 | Aggregated funds from 4 distinct senders.; Operating from au... |
+| 40 | `KKBK10001279` | `LAYER_2_DISTRIBUTOR` | ₹50,058.93 | 27.0/100 | Aggregated funds from 5 distinct senders.; Operating from au... |
+| 41 | `BARB10001158` | `LAYER_2_DISTRIBUTOR` | ₹3,015.89 | 27.0/100 | Aggregated funds from 5 distinct senders.; Operating from au... |
+| 42 | `KKBK10001100` | `LAYER_2_DISTRIBUTOR` | ₹2,986.69 | 27.0/100 | Aggregated funds from 3 distinct senders.; Operating from au... |
+| 43 | `IPOS10001244` | `LAYER_2_DISTRIBUTOR` | ₹20,975.05 | 12.0/100 | Operating from automation/emulator device: Linux_Script; Det... |
+| 44 | `ICIC10001266` | `LAYER_2_DISTRIBUTOR` | ₹7,880.14 | 12.0/100 | Operating from automation/emulator device: Linux_Script; Det... |
+| 45 | `PYTM10001400` | `LAYER_2_DISTRIBUTOR` | ₹32,882.49 | 12.0/100 | Operating from automation/emulator device: Linux_Script; Det... |
+| 46 | `PUNB10001409` | `LAYER_2_DISTRIBUTOR` | ₹193,725.08 | 12.0/100 | Operating from automation/emulator device: Linux_Script; Det... |
+| 47 | `SBIN10001320` | `LAYER_2_DISTRIBUTOR` | ₹36,382.89 | 12.0/100 | Operating from automation/emulator device: Linux_Script; Det... |
+| 48 | `HDFC10001173` | `LAYER_2_DISTRIBUTOR` | ₹16,150.89 | 12.0/100 | Operating from automation/emulator device: Linux_Script; Det... |
+
+3. THEREFORE, in exercise of powers conferred under Section 91 of the Code of Criminal Procedure / 
+   Section 94 of the Bharatiya Nagarik Suraksha Sanhita (BNSS), you are hereby requested to:
+   
+   (a) IMMEDIATELY effect a Debit Freeze / Lien Mark on the accounts listed above for the disputed amounts.
+   (b) Furnish KYC documents, Account Opening Forms (AOF), registered Mobile numbers, and 
+       IP login logs for the suspect accounts within 24 hours of receipt of this notice.
+   (c) Reverse / credit the illicit funds back to the originating complainant account under 
+       standard SOP guidelines upon magistrate approval.
+
+Issued by:
+Inspector of Cyber Crime Police,
+Cyber Crime Police Station, HQ.
+========================================================================================

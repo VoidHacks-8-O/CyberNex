@@ -1,0 +1,48 @@
+
+========================================================================================
+             FORM FOR REQUISITION OF BANK ACCOUNT FREEZE / LIEN
+           UNDER SECTION 91 Cr.P.C. / SECTION 94 BHARATIYA NAGARIK SURAKSHA SANHITA (BNSS)
+========================================================================================
+
+[DRAFT FOR AUTHORIZED POLICE / LAW ENFORCEMENT OFFICER REVIEW]
+
+Date: 02/10/2026
+Ref / Investigation ID: INV-3689D2A7
+
+TO:
+The Nodal Officer / Fraud Risk Management Team,
+Concerned Banking Institutions & Payment Aggregators.
+
+SUBJECT: 
+URGENT: Requisition for debit freeze / marking of lien on beneficiary money mule accounts
+under Section 91 Cr.P.C. / Section 94 BNSS in connection with cyber fraud investigation.
+
+Sir / Madam,
+
+1. WHEREAS an investigation has been registered regarding cyber fraud originating from 
+   complainant account: V_ACC_1001.
+
+2. AND WHEREAS digital forensics analysis reveals that defrauded funds totaling ₹126,562.74 
+   were illicitly moved through multi-layered mule networks to the following target beneficiary accounts:
+
+
+| 1 | `D_ACC_6002` | `LAYER_2_DISTRIBUTOR` | ₹210,000.00 | 58.0/100 | 100.0% funds dispersed within median 12.0 mins.; Rapidly dis... |
+| 2 | `D_ACC_6001` | `LAYER_2_DISTRIBUTOR` | ₹210,000.00 | 58.0/100 | 100.0% funds dispersed within median 12.0 mins.; Rapidly dis... |
+| 3 | `C_ACC_5001` | `LAYER_1_COLLECTOR` | ₹126,562.74 | 52.0/100 | 92.1% funds dispersed within median 17.5 mins.; Aggregated f... |
+| 4 | `T_CRYPTO_7002` | `LAYER_3_TERMINAL` | ₹140,000.00 | 18.0/100 | Operating from automation/emulator device: Linux_Script; Det... |
+| 5 | `T_WALLET_7001` | `LAYER_3_TERMINAL` | ₹140,000.00 | 14.0/100 | Operating from automation/emulator device: Linux_Script; Uti... |
+| 6 | `T_P2P_7003` | `LAYER_3_TERMINAL` | ₹140,000.00 | 14.0/100 | Operating from automation/emulator device: Linux_Script; Uti... |
+
+3. THEREFORE, in exercise of powers conferred under Section 91 of the Code of Criminal Procedure / 
+   Section 94 of the Bharatiya Nagarik Suraksha Sanhita (BNSS), you are hereby requested to:
+   
+   (a) IMMEDIATELY effect a Debit Freeze / Lien Mark on the accounts listed above for the disputed amounts.
+   (b) Furnish KYC documents, Account Opening Forms (AOF), registered Mobile numbers, and 
+       IP login logs for the suspect accounts within 24 hours of receipt of this notice.
+   (c) Reverse / credit the illicit funds back to the originating complainant account under 
+       standard SOP guidelines upon magistrate approval.
+
+Issued by:
+Inspector of Police,
+Cyber Crime Police Station.
+========================================================================================
